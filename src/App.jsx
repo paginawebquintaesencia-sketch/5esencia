@@ -1,6 +1,6 @@
 import './App.css';
 import logo from './img/logo.png';
-import { Analytics } from "@vercel/analytics/next"
+import { Analytics } from "@vercel/analytics/react"
 import Navbar from './components/Navbar.jsx';
 import Footer from './components/Footer.jsx';
 import CalendarioPublico from './components/CalendarioPublico';
@@ -28,9 +28,7 @@ export default function App() {
         <Route path="/admin" element={<Navigate to="/admin/talleres" replace />} />
       </Routes>
       <Footer />
-
-
-      
+      <Analytics />
     </div>
   );
 }
