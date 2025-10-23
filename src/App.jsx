@@ -1,5 +1,6 @@
 import './App.css';
 import logo from './img/logo.png';
+import { Analytics } from "@vercel/analytics/next"
 import Navbar from './components/Navbar.jsx';
 import Footer from './components/Footer.jsx';
 import CalendarioPublico from './components/CalendarioPublico';
