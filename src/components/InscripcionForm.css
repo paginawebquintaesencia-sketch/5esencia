@@ -1,0 +1,120 @@
+.inscripcion-container {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 4rem 2rem;
+  min-height: 90vh;
+  background-color: #f4f5f7;
+  font-family: 'Montserrat', sans-serif;
+  box-sizing: border-box;
+}
+
+.inscripcion-form-card {
+  background-color: #ffffff;
+  padding: 2.5rem 3rem;
+  border-radius: 12px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+  width: 100%;
+  max-width: 500px;
+  border-top: 5px solid #0b0f3b;
+  box-sizing: border-box;
+}
+
+.inscripcion-form-card h2 {
+  text-align: center;
+  font-size: 2rem;
+  font-weight: 800;
+  color: #0b0f3b;
+  margin-top: 0;
+  margin-bottom: 0.5rem;
+}
+
+.inscripcion-form-card p {
+  text-align: center;
+  color: #8c8ea5;
+  margin-bottom: 1.5rem;
+  line-height: 1.6;
+}
+
+.taller-titulo {
+  text-align: center;
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #3b3e6c;
+  padding: 1rem;
+  background-color: #f4f5f7;
+  border-radius: 8px;
+  margin-bottom: 2rem;
+  margin-top: 0.5rem;
+}
+
+.form-group {
+  margin-bottom: 1.5rem;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 600;
+  color: #495057;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 14px 16px;
+  border: 1px solid #ced4da;
+  border-radius: 8px;
+  box-sizing: border-box;
+  font-size: 1rem;
+  font-family: 'Montserrat', sans-serif;
+}
+
+.form-group input:focus {
+  outline: none;
+  border-color: #0b0f3b;
+  box-shadow: 0 0 0 3px rgba(11, 15, 59, 0.1);
+}
+
+.btn-submit-inscripcion {
+  background-color: #0b0f3b;
+  color: white;
+  border: none;
+  border-radius: 30px;
+  padding: 18px 30px;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  width: 100%;
+  transition: all 0.2s;
+}
+
+.btn-submit-inscripcion:hover {
+  background-color: #3b3e6c;
+  transform: translateY(-2px);
+}
+
+.btn-volver {
+  display: inline-block;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #8c8ea5;
+  text-decoration: none;
+  margin-bottom: 1.5rem;
+}
+
+.btn-volver:hover {
+  color: #0b0f3b;
+  text-decoration: underline;
+}
+
+@media (max-width: 768px) {
+  .inscripcion-container {
+    padding: 1.5rem 1rem;
+  }
+  .inscripcion-form-card {
+    padding: 2rem 1.5rem;
+  }
+  .inscripcion-form-card h2 {
+    font-size: 1.5rem;
+  }
+}

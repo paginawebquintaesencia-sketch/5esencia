@@ -1,0 +1,14 @@
+:root { color-scheme: light; }
+* { box-sizing: border-box; }
+html, body, #root { height: 100%; }
+body { margin: 0; min-width: 320px; }
+a { color: inherit; text-decoration: none; }
+
+/* Eliminar barras de desplazamiento globalmente */
+* {
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* Internet Explorer 10+ */
+}
+*::-webkit-scrollbar {
+  display: none; /* WebKit */
+}

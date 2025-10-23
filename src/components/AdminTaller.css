@@ -1,0 +1,370 @@
+
+.admin-calendario-container {
+  padding: 2rem;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  background-color: #f8f9fa;
+  color: #333;
+}
+
+.admin-calendario-container h1,
+.admin-calendario-container h2 {
+    font-weight: bold;
+  color: #212529;
+  border-bottom: 2px solid #dee2e6;
+  padding-bottom: 10px;
+}
+
+.admin-calendario-container h2 {
+  margin-top: 2rem;
+}
+
+.btn-add-new {
+   font-family: 'Segoe UI';
+  background-color: #0d6efd;
+  color: white;
+  padding: 12px 18px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 500;
+  margin-bottom: 1.5rem;
+  transition: background-color 0.2s;
+}
+.btn-add-new:hover {
+  background-color: #0b5ed7;
+}
+
+.tabla-talleres {
+  width: 100%;
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+  overflow: hidden; 
+  border: 1px solid #e9ecef;
+}
+
+.tabla-body {
+  overflow-x: auto;
+}
+
+.tabla-header, .tabla-fila {
+  display: grid;
+  grid-template-columns: 2fr 1.5fr 1.5fr 1fr 1fr 1fr 0.8fr; 
+  gap: 15px;
+  padding: 18px 24px;
+  border-bottom: 1px solid #e9ecef;
+  align-items: center;
+  min-width: 900px;
+}
+
+.tabla-header {
+  font-weight: 600;
+  background-color: #f1f3f5;
+  color: #495057;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  border-bottom: 2px solid #dee2e6;
+}
+
+.tabla-fila {
+  border-bottom: none; 
+}
+.tabla-fila:hover {
+  background-color: #fcfcfc;
+}
+
+.tabla-fila div {
+  font-size: 0.95rem;
+}
+
+.tabla-fila-acciones {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  padding: 12px 24px;
+  background-color: #f8f9fa;
+  border-bottom: 1px solid #e9ecef;
+  min-width: 900px;
+  box-sizing: border-box;
+}
+
+.tabla-body > .tabla-fila-acciones:last-of-type {
+  border-bottom: none;
+}
+
+.btn-accion {
+  padding: 6px 12px;
+  font-size: 0.85rem;
+  border: 1px solid #ced4da;
+  background-color: #ffffff;
+  cursor: pointer;
+  border-radius: 5px;
+  font-weight: 500;
+  transition: all 0.2s;
+  font-family: 'Segoe UI';
+}
+.btn-accion:hover {
+  filter: brightness(0.95);
+}
+
+.btn-accion-edit { color: #0d6efd; border-color: #a0c7fd; }
+.btn-accion-edit:hover { background-color: #0d6efd; color: white; }
+
+.btn-accion-delete { color: #dc3545; border-color: #f7b2b7; }
+.btn-accion-delete:hover { background-color: #dc3545; color: white; }
+
+.btn-accion-view { color: #0dcaf0; border-color: #a7eefc; }
+.btn-accion-view:hover { background-color: #0dcaf0; color: white; }
+
+
+.estado-badge {
+  padding: 5px 10px;
+  border-radius: 15px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: white;
+  text-transform: capitalize;
+}
+.estado-badge.confirmado {
+  background-color: #198754;
+}
+.estado-badge.pendiente {
+  background-color: #ffc107;
+  color: #333;
+}
+
+.taller-form-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.65);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  backdrop-filter: blur(5px);
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.taller-form, .inscripciones-modal-content {
+  background-color: white;
+  padding: 2rem 2.5rem;
+  border-radius: 8px;
+  box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+  width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+.taller-form {
+  max-width: 650px;
+}
+
+.form-group {
+  margin-bottom: 1.25rem;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 6px;
+  font-weight: 500;
+  color: #495057;
+}
+
+.form-group input[type="text"],
+.form-group input[type="date"],
+.form-group input[type="time"],
+.form-group input[type="number"],
+.form-group textarea,
+.form-group select {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ced4da;
+  border-radius: 5px;
+  box-sizing: border-box; 
+  font-size: 1rem;
+  font-family: inherit;
+  background-color: #fff;
+}
+.form-group textarea {
+  min-height: 80px;
+}
+
+.form-row {
+  display: flex;
+  gap: 1.5rem;
+}
+.form-row .form-group {
+  flex: 1;
+}
+
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 2rem;
+  border-top: 1px solid #e9ecef;
+  padding-top: 1.5rem;
+}
+.form-actions button {
+  padding: 12px 24px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+.btn-cancel { background-color: #e9ecef; color: #333;font-family: 'Segoe UI'; }
+.btn-cancel:hover { background-color: #dee2e6; }
+.btn-save { background-color: #198754; color: white; font-family: 'Segoe UI'; }
+.btn-save:hover { background-color: #157347; }
+
+.inscripciones-modal-content {
+  max-width: 750px;
+}
+.inscripciones-modal-content h2{
+    font-weight: bold;
+}
+.inscripciones-modal-content h3 {
+  font-weight: 500;
+  color: #6c757d;
+  margin-top: -10px;
+  margin-bottom: 20px;
+}
+.inscripciones-lista {
+    width: 100%;
+  border-top: 1px solid #dee2e6;
+  border-left: 1px solid #dee2e6;
+  border-right: 1px solid #dee2e6;
+    border-radius: 6px;
+    overflow: hidden;
+}
+.inscrito-item {
+  display: grid;
+  grid-template-columns: 1fr 1.5fr 1fr;
+  gap: 15px;
+  padding: 15px 20px;
+  border-bottom: 1px solid #e9ecef;
+  align-items: center;
+}
+.inscrito-item.header {
+  background-color: #f8f9fa;
+  font-weight: 600;
+  color: #495057;
+  font-size: 0.9rem;
+}
+.no-inscritos { padding: 20px; text-align: center; color: #6c757d; }
+.btn-cancelar-inscripcion {
+  background: #fff;
+  color: #dc3545;
+  border: 1px solid #dc3545;
+  padding: 6px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 0.85rem;
+  font-family: 'Segoe UI';
+}
+.btn-cancelar-inscripcion:hover { background-color: #dc3545; color: white; }
+
+@media (max-width: 768px) {
+  .admin-calendario-container {
+    padding: 0;
+  }
+  .admin-calendario-container h1 {
+    font-weight: bold;
+    font-size: 1.5rem;
+    padding: 1rem;
+  }
+  .admin-calendario-container h2 {
+    font-weight: bold;
+    padding: 0 1rem;
+    font-weight:bolder;
+    font-size: 1.25rem;
+  }
+  .btn-add-new {
+    margin: 0 1rem 1.5rem 1rem;
+    width: calc(100% - 2rem);
+    font-family: 'Segoe UI';
+  }
+
+  .tabla-talleres {
+    border: none;
+    border-radius: 0;
+    box-shadow: none;
+  }
+  
+  .tabla-header {
+    display: none;
+  }
+
+  .tabla-fila, .tabla-fila-acciones {
+    min-width: 0;
+  }
+  
+  .tabla-fila {
+    grid-template-columns: 1fr;
+    gap: 10px;
+    padding: 1rem;
+    border-bottom: none; 
+  }
+  
+  .tabla-fila div:nth-of-type(1)::before { content: 'Taller: '; font-weight: 600; }
+  .tabla-fila div:nth-of-type(2)::before { content: 'Materiales: '; font-weight: 600; }
+  .tabla-fila div:nth-of-type(3)::before { content: 'Fecha: '; font-weight: 600; }
+  .tabla-fila div:nth-of-type(4)::before { content: 'Instructor: '; font-weight: 600; }
+  .tabla-fila div:nth-of-type(5)::before { content: 'Inscritos: '; font-weight: 600; }
+  .tabla-fila div:nth-of-type(6)::before { content: 'Estado: '; font-weight: 600; }
+  .tabla-fila div:nth-of-type(7)::before { content: 'Costo: '; font-weight: 600; }
+
+  .tabla-fila div {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 0;
+    border-bottom: 1px dashed #f0f0f0;
+  }
+  .tabla-fila div:last-child {
+    border-bottom: none;
+  }
+
+  .tabla-fila-acciones {
+    padding: 1rem;
+    flex-direction: column;
+  }
+  .btn-accion {
+    width: 100%;
+    text-align: center;
+    padding: 10px 12px;
+    font-size: 0.95rem;
+  }
+
+  .form-row {
+    flex-direction: column;
+    gap: 0;
+  }
+  .taller-form, .inscripciones-modal-content {
+    padding: 1.5rem;
+    max-height: 85vh;
+  }
+  
+  .inscrito-item {
+    grid-template-columns: 1fr;
+    gap: 10px;
+    text-align: center;
+  }
+  .inscrito-item.header { display: none; }
+  .inscrito-item div:nth-of-type(1)::before { content: 'Nombre: '; font-weight: 600; }
+  .inscrito-item div:nth-of-type(2)::before { content: 'Email: '; font-weight: 600; }
+  .inscrito-item div {
+    display: flex;
+    justify-content: space-between;
+  }
+  .btn-cancelar-inscripcion {
+    width: 100%;
+  }
+}

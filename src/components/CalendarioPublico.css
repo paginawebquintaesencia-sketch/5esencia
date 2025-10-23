@@ -1,0 +1,316 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&display=swap');
+
+.calendario-publico-container {
+  display: grid;
+  grid-template-columns: 6fr 4fr;
+  min-height: 90vh;
+  font-family: 'Montserrat', sans-serif;
+  background-color: #f4f5f7;
+  color: #0b0f3b;
+  padding: 2rem;
+  gap: 2rem;
+  overflow: hidden; 
+}
+
+.calendario-grid-area {
+  width: 100%;
+  overflow-x: auto; 
+  overflow-y: hidden;
+}
+
+.mes-header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 2rem;
+  min-width: 600px; 
+}
+.mes-header h1 {
+  font-size: 2.5rem;
+  font-weight: 800;
+  margin: 0 2rem;
+  letter-spacing: 2px;
+}
+
+.mes-nav-btn {
+  background: none;
+  border: none;
+  color: #0b0f3b; 
+  cursor: pointer;
+  font-size: 0;
+  line-height: 0;
+  width: 1em; 
+  height: 1.5em; 
+  font-size: 1.25rem; 
+  position: relative;
+}
+.mes-nav-btn::before {
+  content: '';
+  display: block;
+  width: 0;
+  height: 0;
+  border-style: solid;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  transition: opacity 0.2s ease;
+}
+
+.mes-nav-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.mes-nav-btn:disabled::before {
+  opacity: 0.5;
+}
+.mes-header .mes-nav-btn:first-of-type::before {
+  border-width: 0.6em 0.8em 0.6em 0; 
+  border-color: transparent currentColor transparent transparent;
+}
+.mes-header .mes-nav-btn:last-of-type::before {
+  border-width: 0.6em 0 0.6em 0.8em;
+  border-color: transparent transparent transparent currentColor;
+}
+
+.calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(85px, 1fr));
+  gap: 8px;
+  min-width: 600px; 
+}
+
+.calendar-day-cell {
+  background-color: #ffffff;
+  border-radius: 8px;
+  min-height: 90px;
+  padding: 8px;
+  border: 2px solid #ffffff;
+  transition: all 0.2s ease-in-out;
+  position: relative; 
+  display: flex;
+  flex-direction: column;
+}
+
+.weekday-label {
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: #8c8ea5; 
+  text-align: left;
+}
+
+.day-number {
+  font-weight: 800;
+  font-size: 1.1rem;
+  text-align: right;
+  margin-top: auto; 
+}
+
+.calendar-day-cell.is-empty {
+  background-color: transparent;
+  border: none;
+}
+.calendar-day-cell.is-empty .day-number {
+  display: none;
+}
+
+.calendar-day-cell.has-taller {
+  cursor: pointer;
+  color: white;
+  justify-content: flex-start; 
+}
+.has-taller .weekday-label {
+  color: white;
+}
+.has-taller .day-number {
+  color: white;
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  margin-top: 0; 
+}
+
+.taller-info-cell {
+  font-size: 0.75rem;
+  font-weight: 600;
+  line-height: 1.2;
+  margin-top: 0.5rem; 
+}
+
+.taller-tag {
+  display: inline-block;
+  font-size: 0.6rem;
+  font-weight: 700;
+  padding: 2px 6px;
+  background-color: rgba(0, 0, 0, 0.2); 
+  border-radius: 6px;
+  margin-top: auto; 
+  width: fit-content; 
+}
+
+.calendar-day-cell.is-selected {
+  background-color: #0b0f3b;
+  color: white;
+  border-color: #0b0f3b;
+  transform: scale(1.02);
+  box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+}
+
+.calendario-detail-area {
+  padding: 3rem 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  overflow-y: auto;
+  overflow-x: hidden; 
+}
+.detalle-default h2 {
+  font-size: 1.5rem;
+  font-weight: 800;
+  letter-spacing: 1px;
+  margin-bottom: 1.5rem;
+}
+.detalle-default p {
+  font-size: 0.9rem;
+  color: #8c8ea5;
+  line-height: 1.6;
+}
+.detalle-taller h2 {
+  font-size: 1.75rem;
+  font-weight: 800;
+  line-height: 1.4;
+  margin-bottom: 1rem;
+}
+.detalle-taller .fecha-hora {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #8c8ea5;
+  margin: 0;
+  line-height: 1.6;
+}
+.detalle-taller .descripcion {
+  font-size: 0.95rem;
+  line-height: 1.7;
+  margin: 2rem 0;
+}
+.detalle-taller .instructor {
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+.detalle-taller .instructor a {
+  color: #0b0f3b;
+  text-decoration: underline;
+  cursor: pointer;
+}
+.btn-inscribirse {
+  background-color: #0b0f3b;
+  color: white;
+  border: none;
+  border-radius: 30px;
+  padding: 18px 30px;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  margin-top: 3rem;
+  transition: all 0.2s;
+}
+.btn-inscribirse:hover {
+  background-color: #3b3e6c;
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+@media (max-width: 1024px) {
+  .calendario-publico-container {
+    grid-template-columns: 1fr; 
+    padding: 1rem;
+    gap: 1rem;
+    height: auto;
+    min-height: 100vh;
+  }
+  .calendario-detail-area {
+    padding: 1.5rem;
+    grid-row: 1; 
+  }
+  .calendar-day-cell {
+    min-height: 100px;
+    padding: 8px;
+    border-radius: 8px;
+  }
+  .weekday-label {
+    font-size: 0.6rem;
+  }
+  .day-number {
+    font-size: 1rem;
+  }
+  .has-taller .day-number {
+    top: 8px;
+    right: 8px;
+    font-size: 1rem;
+  }
+  .taller-info-cell {
+    font-size: 0.7rem;
+    line-height: 1.2;
+    margin-top: 0.5rem;
+  }
+  .taller-tag {
+    font-size: 0.6rem;
+    padding: 2px 5px;
+    margin-top: 4px;
+  }
+  .mes-header h1 {
+    font-size: 1.8rem;
+  }
+  
+  .calendar-grid, .mes-header {
+    min-width: 450px;
+  }
+}
+
+/* Animaciones para cambio de mes */
+@keyframes fadeInSlide {
+  0% {
+    opacity: 0;
+    transform: translateX(30px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes fadeOutSlide {
+  0% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(-30px);
+  }
+}
+
+@keyframes headerFade {
+  0% {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.calendar-grid {
+  animation: fadeInSlide 0.4s ease-out;
+}
+
+.calendar-grid.changing {
+  animation: fadeOutSlide 0.2s ease-in;
+}
+
+.mes-header h1 {
+  animation: headerFade 0.3s ease-out;
+}
