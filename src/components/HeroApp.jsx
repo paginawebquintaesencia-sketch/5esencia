@@ -13,7 +13,7 @@ export default function HeroApp() {
             Un espacio <strong style={{color: '#f97316'}}>creado para el arte, la creatividad y la conexión auténtica</strong>. Celebramos la expresión artística en todas sus formas. Ofrecemos <strong style={{color: '#ef44d4'}}>talleres presenciales, clases personalizadas, experiencias creativas para eventos privados y una galería virtual</strong> que da visibilidad a artistas emergentes. Nuestro objetivo es <strong style={{color: '#a855f7'}}>impulsar el talento</strong>, fomentar la colaboración y brindar un espacio donde cada persona pueda <strong style={{color: '#3b82f6'}}>conectar con su esencia a través del arte</strong>.
           </p>
           <div className="cta-row">
-            <Link to="/comunidad" className="btn btn-primary" data-aos="fade-up">
+            <Link to="/comunidad" className="btn btn-primary">
               <span className="icon-person">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
@@ -22,7 +22,7 @@ export default function HeroApp() {
               </span>
               Unirse a la comunidad
             </Link>
-            <Link to="/calendario" className="btn btn-outline" data-aos="fade-up" data-aos-delay="150">
+            <Link to="/calendario" className="btn btn-outline">
               <span className="icon-calendar">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <rect x="3" y="4" width="18" height="18" rx="2" ry="2" stroke="currentColor" strokeWidth="2"/>

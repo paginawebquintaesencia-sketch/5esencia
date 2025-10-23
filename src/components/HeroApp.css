@@ -87,7 +87,6 @@
   text-decoration: none !important;
   font-weight: 600 !important;
   font-size: 16px !important;
-  transition: all 0.3s ease !important;
   min-height: 56px !important;
   white-space: nowrap !important;
   cursor: pointer !important;
@@ -102,7 +101,6 @@
 .btn-primary:hover {
   background: #2d3033 !important;
   border-color: #2d3033 !important;
-  transform: translateY(-2px) !important;
 }
 
 .btn-outline {
@@ -114,7 +112,6 @@
 .btn-outline:hover {
   background: #3c4043 !important;
   color: white !important;
-  transform: translateY(-2px) !important;
 }
 
 /* Iconos de botones */
@@ -359,7 +356,7 @@
   }
   
   .btn:active {
-    transform: scale(0.98);
+    /* Sin transformaciones */
   }
 }
 
@@ -381,18 +378,16 @@
 
 /* Improved button states */
 .btn:active {
-  transform: translateY(0);
+  /* Sin transformaciones */
 }
 
 .btn-primary:active {
   background: #0f1419;
-  transform: translateY(0);
 }
 
 .btn-outline:active {
   background: #1f2740;
   color: #f8fafc;
-  transform: translateY(0);
 }
 
 /* Mobile-specific improvements */
@@ -447,13 +442,4 @@
   }
 }
 
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
+/* Animaciones eliminadas para evitar conflictos */
