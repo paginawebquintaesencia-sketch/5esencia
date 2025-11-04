@@ -1,6 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './AdminTaller.css';
 import AdminNav from './AdminNav';
+import { db } from '../firebase';
+import { collection, getDocs, addDoc, updateDoc, deleteDoc, doc, getDoc } from 'firebase/firestore';
+import { Calendar } from './ui/calendar';
+import { format } from 'date-fns';
+import { es } from 'date-fns/locale';
 
 function InscripcionesModal({ taller, onClose, onCancelar }) {
   
@@ -50,6 +55,10 @@ function InscripcionesModal({ taller, onClose, onCancelar }) {
 }
 
 function TallerForm({ taller, onClose, onSave }) {
+  const [selectedDate, setSelectedDate] = useState(
+    taller?.date ? new Date(taller.date + 'T00:00:00') : undefined
+  );
+  const [isCalendarOpen, setIsCalendarOpen] = useState(false);
   
   const [formData, setFormData] = useState({
     id: taller?.id || null,
@@ -120,11 +129,43 @@ function TallerForm({ taller, onClose, onSave }) {
           <input type="text" name="instructor" value={formData.instructor} onChange={handleChange} required />
         </div>
 
-        <div className="form-row">
-          <div className="form-group">
-            <label>Fecha</label>
-            <input type="date" name="date" value={formData.date} onChange={handleChange} required />
+        <div className="form-group">
+          <label>Fecha</label>
+          <div style={{ position: 'relative' }}>
+            <button
+              type="button"
+              onClick={() => setIsCalendarOpen(!isCalendarOpen)}
+              className="date-picker-trigger"
+            >
+              <span>{selectedDate ? format(selectedDate, 'PPP', { locale: es }) : 'Selecciona una fecha'}</span>
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <rect width="18" height="18" x="3" y="4" rx="2" ry="2"/>
+                <line x1="16" x2="16" y1="2" y2="6"/>
+                <line x1="8" x2="8" y1="2" y2="6"/>
+                <line x1="3" x2="21" y1="10" y2="10"/>
+              </svg>
+            </button>
+            {isCalendarOpen && (
+              <div className="calendar-popover">
+                <Calendar
+                  mode="single"
+                  selected={selectedDate}
+                  onSelect={(date) => {
+                    setSelectedDate(date);
+                    if (date) {
+                      setFormData(prev => ({ ...prev, date: format(date, 'yyyy-MM-dd') }));
+                    }
+                    setIsCalendarOpen(false);
+                  }}
+                  initialFocus
+                  locale={es}
+                />
+              </div>
+            )}
           </div>
+        </div>
+
+        <div className="form-row">
           <div className="form-group">
             <label>Capacidad Máxima</label>
             <input type="number" name="max" value={formData.max} onChange={handleChange} min="1" required />
@@ -157,71 +198,18 @@ function TallerForm({ taller, onClose, onSave }) {
 }
 
 function AdminTaller() {
-  
-  const [talleres, setTalleres] = useState([
-    { 
-      id: 1, 
-      title: "Pinta tu taza en cerámica", 
-      materiales: "Pieza de cerámica",
-      date: "2025-08-06", 
-      time: "18:00 - 20:00", 
-      instructor: "Rocío Campa", 
-      description: "Pieza de cerámica, guía paso a paso...", 
-      max: 20,
-      estado: 'Confirmado', 
-      costo: 550,
-      inscritos: [
-        { id: 101, nombre: 'Ana Gómez', email: 'ana@mail.com' },
-        { id: 102, nombre: 'Luis Torres', email: 'ltorres@mail.com' },
-        { id: 103, nombre: 'Carla Solis', email: 'csolis@mail.com' },
-      ],
-    },
-    { 
-      id: 2, 
-      title: "Pinta tu regalo para papá", 
-      materiales: "Un regalo especial para papá.",
-      date: "2025-08-13", 
-      time: "17:00 - 19:00", 
-      instructor: "Ana Soto", 
-      description: "Un regalo especial para papá.", 
-      max: 15,
-      estado: 'Confirmado',
-      costo: 500,
-      inscritos: [],
-    },
-    { 
-      id: 3, 
-      title: "Teje tu portavasos en crochet", 
-      materiales: "Aprende crochet desde cero.",
-      date: "2025-08-18", 
-      time: "10:00 - 12:00", 
-      instructor: "Laura Paz", 
-      description: "Aprende crochet desde cero.", 
-      max: 20,
-      estado: 'Pendiente',
-      costo: 400,
-      inscritos: [
-        { id: 104, nombre: 'Mario Bros', email: 'mario@mail.com' },
-      ],
-    },
-    { 
-      id: 4, 
-      title: "Introducción al dibujo", 
-      materiales: "Conceptos básicos de dibujo.",
-      date: "2025-08-28", 
-      time: "16:00 - 18:00", 
-      instructor: "Carlos Ruiz", 
-      description: "Conceptos básicos de dibujo.", 
-      max: 25,
-      estado: 'Pendiente',
-      costo: 350,
-      inscritos: [],
-    },
-  ]);
-
+  const [talleres, setTalleres] = useState([]);
   const [isFormVisible, setIsFormVisible] = useState(false);
   const [selectedTaller, setSelectedTaller] = useState(null);
   const [viewingInscripciones, setViewingInscripciones] = useState(null);
+
+  useEffect(() => {
+    const getTalleres = async () => {
+      const data = await getDocs(collection(db, "talleres"));
+      setTalleres(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+    };
+    getTalleres();
+  }, []);
 
   const handleAddNew = () => {
     setSelectedTaller(null);
@@ -231,33 +219,45 @@ function AdminTaller() {
     setSelectedTaller(taller);
     setIsFormVisible(true);
   };
-  const handleSaveTaller = (tallerData) => {
+  const handleSaveTaller = async (tallerData) => {
     if (tallerData.id) {
+      const tallerDoc = doc(db, "talleres", tallerData.id);
+      await updateDoc(tallerDoc, tallerData);
       setTalleres(talleres.map(t => t.id === tallerData.id ? { ...t, ...tallerData } : t));
     } else {
-      const newTaller = { ...tallerData, id: Date.now(), inscritos: [] }; 
-      setTalleres([newTaller, ...talleres]);
+      await addDoc(collection(db, "talleres"), { ...tallerData, inscritos: [] });
+      const data = await getDocs(collection(db, "talleres"));
+      setTalleres(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
     }
     setIsFormVisible(false);
     setSelectedTaller(null);
   };
-  const handleDelete = (tallerId) => {
+  const handleDelete = async (tallerId) => {
     if (window.confirm("¿Estás seguro de que quieres eliminar este taller?")) {
+      const tallerDoc = doc(db, "talleres", tallerId);
+      await deleteDoc(tallerDoc);
       setTalleres(talleres.filter(t => t.id !== tallerId));
     }
   };
   const handleViewRegistrations = (tallerId) => {
     setViewingInscripciones(tallerId);
   };
-  const handleCancelarInscripcion = (tallerId, inscritoId) => {
+  const handleCancelarInscripcion = async (tallerId, inscritoId) => {
     if (!window.confirm("¿Seguro que quieres cancelar esta inscripción?")) return;
-    setTalleres(prevTalleres => 
-      prevTalleres.map(taller => 
-        taller.id === tallerId 
-          ? { ...taller, inscritos: taller.inscritos.filter(i => i.id !== inscritoId) } 
-          : taller
-      )
-    );
+    const tallerRef = doc(db, "talleres", tallerId);
+    const tallerSnap = await getDoc(tallerRef);
+    if (tallerSnap.exists()) {
+      const currentInscritos = tallerSnap.data().inscritos;
+      const updatedInscritos = currentInscritos.filter(i => i.id !== inscritoId);
+      await updateDoc(tallerRef, { inscritos: updatedInscritos });
+      setTalleres(prevTalleres => 
+        prevTalleres.map(taller => 
+          taller.id === tallerId 
+            ? { ...taller, inscritos: updatedInscritos } 
+            : taller
+        )
+      );
+    }
   };
 
   const tallerEnVista = talleres.find(t => t.id === viewingInscripciones);

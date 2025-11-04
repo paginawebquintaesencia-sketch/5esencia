@@ -25,13 +25,4 @@ const analytics = getAnalytics(app);
 const db = getFirestore(app);
 const auth = getAuth(app);
 
-export { db, auth };
-
-users: {
-  userId1: {
-    role: "admin"
-  }
-  userId2: {
-    role: "user"
-  }
-}
+export { db, auth, analytics };
