@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { createPortal } from 'react-dom';
 import { Link } from 'react-router-dom';
 import Signup from './signup.jsx';
+import Login from './login.jsx';
 import './navbar.css';
 
 function Navbar() {
@@ -26,7 +27,11 @@ function Navbar() {
     <div className="modal-overlay">
       <div className="modal-content">
         <button className="close-btn" onClick={closeModal}>×</button>
-        <Signup initialMode={isLoginMode ? 'login' : 'register'} />
+        {isLoginMode ? (
+          <Login />
+        ) : (
+          <Signup />
+        )}
       </div>
     </div>
   );
