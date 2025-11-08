@@ -1,14 +1,18 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { Link } from 'react-router-dom';
 import Signup from './signup.jsx';
 import Login from './login.jsx';
 import './navbar.css';
+import { auth } from '../firebase';
+import { onAuthStateChanged } from 'firebase/auth';
+import avatarImg from '../img/logo.png';
 
 function Navbar() {
   const [activeLink, setActiveLink] = useState('');
   const [showModal, setShowModal] = useState(false);
   const [isLoginMode, setIsLoginMode] = useState(true);
+  const [user, setUser] = useState(null);
 
   const handleClick = (link) => {
     setActiveLink(link);
@@ -23,12 +27,19 @@ function Navbar() {
     setShowModal(false);
   };
 
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (u) => {
+      setUser(u);
+    });
+    return () => unsubscribe();
+  }, []);
+
   const modalContent = (
     <div className="modal-overlay">
       <div className="modal-content">
         <button className="close-btn" onClick={closeModal}>×</button>
         {isLoginMode ? (
-          <Login />
+          <Login onSwitchToSignup={() => setIsLoginMode(false)} />
         ) : (
           <Signup />
         )}
@@ -86,16 +97,31 @@ function Navbar() {
         </nav>
 
         <div className="auth-buttons">
-          <button className="btn-login" onClick={() => openModal(true)}>
-            <svg className="icon-person" width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-              <circle cx="12" cy="7" r="4" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-            </svg>
-            Iniciar Sesión
-          </button>
-          <button className="btn-register" onClick={() => openModal(false)}>
-            Registrarse
-          </button>
+          {!user ? (
+            <>
+              <button className="btn-login" onClick={() => openModal(true)}>
+                <svg className="icon-person" width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                  <circle cx="12" cy="7" r="4" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                </svg>
+                Iniciar Sesión
+              </button>
+              <Link className="btn-register" to="/calendario">
+                Calendario
+              </Link>
+            </>
+          ) : (
+            <div className="user-info">
+              <img src={user.photoURL || avatarImg} alt="Avatar" className="nav-avatar" />
+              <div className="nav-user">
+                <div className="nav-user-name">{user.displayName || 'Usuario'}</div>
+                <div className="nav-user-email">{user.email}</div>
+              </div>
+              <Link className="btn-register" to="/calendario">
+                Calendario
+              </Link>
+            </div>
+          )}
         </div>
       </div>
       {showModal && createPortal(modalContent, document.body)}

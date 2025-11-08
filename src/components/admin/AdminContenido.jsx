@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import AdminNav from './AdminNav';
 import './AdminContenido.css';
+import './AdminNav.css';
 
 function AdminContenido() {
   
@@ -33,13 +34,12 @@ function AdminContenido() {
   };
 
   return (
-    <div className="admin-calendario-container">
-      {}
+    <div className="admin-layout">
       <AdminNav />
-
-      <h1>Gestión de Contenido</h1>
-      
-      <div className="admin-contenido-card">
+      <main className="admin-content">
+        <h1>Gestión de Contenido</h1>
+        
+        <div className="admin-contenido-card">
         {}
         <h2>Misión y Propósito</h2>
         <p>Redacta el texto que describe el propósito del centro (arte, creatividad, conexión).</p>
@@ -49,9 +49,9 @@ function AdminContenido() {
           value={mision}
           onChange={handleTextChange}
         />
-      </div>
+        </div>
 
-      <div className="admin-contenido-card">
+        <div className="admin-contenido-card">
         {}
         <h2>Imagen Representativa</h2>
         <p>Diseña y sube una imagen que refleje la misión.</p>
@@ -77,15 +77,16 @@ function AdminContenido() {
             />
           </div>
         )}
-      </div>
+        </div>
 
-      <button 
-        className="btn-guardar-contenido" 
-        onClick={handleSave}
-        disabled={subiendo}
-      >
-        {subiendo ? 'Guardando...' : 'Guardar Cambios'}
-      </button>
+        <button 
+          className="btn-guardar-contenido" 
+          onClick={handleSave}
+          disabled={subiendo}
+        >
+          {subiendo ? 'Guardando...' : 'Guardar Cambios'}
+        </button>
+      </main>
     </div>
   );
 }

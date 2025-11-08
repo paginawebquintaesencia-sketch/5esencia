@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './AdminTaller.css';
-import AdminNav from './AdminNav';
+import './admin/AdminNav.css';
+import AdminNav from './admin/AdminNav';
 import { db } from '../firebase';
 import { collection, getDocs, addDoc, updateDoc, deleteDoc, doc, getDoc } from 'firebase/firestore';
 import { Calendar } from './ui/calendar';
@@ -263,13 +264,12 @@ function AdminTaller() {
   const tallerEnVista = talleres.find(t => t.id === viewingInscripciones);
 
   return (
-    <div className="admin-calendario-container">
-      
-      {}
+    <div className="admin-layout">
       <AdminNav />
-      <button onClick={handleAddNew} className="btn-add-new">
-        + Agregar Nuevo Taller
-      </button>
+      <main className="admin-content admin-calendario-container">
+        <button onClick={handleAddNew} className="btn-add-new">
+          + Agregar Nuevo Taller
+        </button>
 
       <h2>Talleres Programados</h2>
       <div className="tabla-talleres">
@@ -322,21 +322,22 @@ function AdminTaller() {
         </div>
       </div>
 
-      {isFormVisible && (
-        <TallerForm 
-          taller={selectedTaller}
-          onClose={() => setIsFormVisible(false)}
-          onSave={handleSaveTaller}
-        />
-      )}
+        {isFormVisible && (
+          <TallerForm 
+            taller={selectedTaller}
+            onClose={() => setIsFormVisible(false)}
+            onSave={handleSaveTaller}
+          />
+        )}
 
-      {viewingInscripciones && (
-        <InscripcionesModal
-          taller={tallerEnVista}
-          onClose={() => setViewingInscripciones(null)}
-          onCancelar={handleCancelarInscripcion}
-        />
-      )}
+        {viewingInscripciones && (
+          <InscripcionesModal
+            taller={tallerEnVista}
+            onClose={() => setViewingInscripciones(null)}
+            onCancelar={handleCancelarInscripcion}
+          />
+        )}
+      </main>
     </div>
   );
 }

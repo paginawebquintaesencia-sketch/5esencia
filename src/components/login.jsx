@@ -1,7 +1,7 @@
 import React from 'react';
 import './login.css';
 
-const Login = () => {
+const Login = ({ onSwitchToSignup }) => {
   return (
     <div className="login-container">
       
@@ -12,7 +12,7 @@ const Login = () => {
       <h2>Iniciar sesión</h2>
 
       <p className="register-link">
-        ¿Aún no tienes cuenta? <a href="#">Regístrate</a>
+        ¿Aún no tienes cuenta? <a href="#" onClick={(e) => { e.preventDefault(); onSwitchToSignup && onSwitchToSignup(); }}>Regístrate</a>
       </p>
 
       <form className="login-form">

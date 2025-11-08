@@ -96,3 +96,17 @@
   background-color: #e9ecef;
   border-color: #b5bdc4;
 }
+
+/* Títulos y espaciado dentro del área de contenido */
+.admin-content h1 {
+  font-size: 1.6rem;
+  font-weight: 700;
+  margin: 0 0 1.25rem 0;
+  color: #212529;
+}
+.admin-content h2 {
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin: 0 0 0.75rem 0;
+  color: #212529;
+}
