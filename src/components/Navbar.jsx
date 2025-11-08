@@ -39,9 +39,9 @@ function Navbar() {
       <div className="modal-content">
         <button className="close-btn" onClick={closeModal}>×</button>
         {isLoginMode ? (
-          <Login onSwitchToSignup={() => setIsLoginMode(false)} />
+          <Login onSwitchToSignup={() => setIsLoginMode(false)} onLoginSuccess={() => setShowModal(false)} />
         ) : (
-          <Signup />
+          <Signup onSwitchToLogin={() => setIsLoginMode(true)} />
         )}
       </div>
     </div>

@@ -3,7 +3,7 @@ import './signup.css';
 import { auth } from '../firebase';
 import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
 
-const Signup = () => {
+const Signup = ({ onSwitchToLogin }) => {
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [email, setEmail] = useState('');
@@ -53,7 +53,7 @@ const Signup = () => {
       <h2>Bienvenido a Quintaesencia</h2>
 
       <p className="login-link">
-        ¿Ya tienes una cuenta? <a href="#">Iniciar sesión</a>
+        ¿Ya tienes una cuenta? <a href="#" onClick={(e) => { e.preventDefault(); onSwitchToLogin && onSwitchToLogin(); }}>Iniciar sesión</a>
       </p>
 
       {error && (
