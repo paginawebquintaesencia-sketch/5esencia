@@ -34,7 +34,7 @@ function Galeria() {
       <h1 className="galeria-title">Galería de Arte</h1>
       <p className="galeria-subtitle">Explora el arte de artistas guatemaltecos</p>
       <div className="galeria-filters">
-        {categorias.map((cat, idx) => (
+        {categorias.map((cat) => (
           <div
             key={cat}
             className={`filter-dot${categoriaSeleccionada === cat ? ' active' : ''}`}
@@ -61,8 +61,8 @@ function Galeria() {
         </div>
       </div>
       <div className="galeria-grid">
-        {imagenesFiltradas.map((img, idx) => (
-          <img key={idx} src={img.src} alt={img.alt} />
+        {imagenesFiltradas.map((img) => (
+          <img key={img.src} src={img.src} alt={img.alt} />
         ))}
       </div>
     </div>

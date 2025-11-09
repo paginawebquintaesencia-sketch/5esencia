@@ -1,18 +1,12 @@
 import './App.css';
-import logo from './img/logo.png';
 import { Analytics } from "@vercel/analytics/react"
 import Navbar from './components/Navbar.jsx';
 import Footer from './components/Footer.jsx';
 import CalendarioPublico from './components/CalendarioPublico';
 import Galeria from './galeria.jsx';
 import ArtistasCalendario from './artistas.jsx';
-<<<<<<< Updated upstream
-import { Routes, Route, Navigate, Link, useLocation } from 'react-router-dom';
-=======
 import ArtistaDetalle from './components/ArtistaDetalle.jsx';
-import { Routes, Route, Navigate, Link } from 'react-router-dom';
->>>>>>> Stashed changes
-import footerImg from './img/footer.png';
+import { Routes, Route, Navigate, Link, useLocation } from 'react-router-dom';
 import AdminTaller from './components/AdminTaller.jsx';
 import InscripcionForm from './components/InscripcionForm';
 import AdminContenido from './components/admin/AdminContenido';
@@ -35,11 +29,8 @@ export default function App() {
         <Route path="/calendario" element={<CalendarioPublico />} />
         <Route path="/galeria" element={<Galeria />} />
         <Route path="/artistas" element={<ArtistasCalendario />} />
-<<<<<<< Updated upstream
+        <Route path="/artistas/:id" element={<ArtistaDetalle />} />
         <Route path="/admin/calendary" element={<Calendary />} />
-=======
-        <Route path="/artistas/:id" element={<ArtistaDetalle />} />    
->>>>>>> Stashed changes
         <Route path="/admin/talleres" element={<AdminTaller />} />
         <Route path="/admin/talleres-activos" element={<TalleresActivos />} />
         <Route path="/admin/programacion" element={<ProgramacionTalleres />} />
