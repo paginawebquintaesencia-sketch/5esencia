@@ -1,6 +1,6 @@
 /* src/components/ArtistaDetalle.css */
 /* Importamos los estilos de los tags que ya teníamos */
-@import '../Artistas.css'; 
+@import '../artistas.css'; 
 
 .detalle-seccion {
   max-width: 85%;

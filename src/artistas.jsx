@@ -2,7 +2,7 @@
 
 import React from 'react';
 import ArtistaCard from './components/ArtistaCard.jsx'; 
-import './Artistas.css'; 
+import './artistas.css'; 
 import { listaArtistas } from './datosArtistas.js'; 
 
 
