@@ -2,26 +2,34 @@ import React, { useEffect, useState } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import './AdminNav.css';
 import avatarImg from '../../img/logo.png';
-import { auth } from '../../firebase';
-import { onAuthStateChanged, signOut } from 'firebase/auth';
+import supabase from '../../utils/supabase';
 
 function AdminNav() {
   const [user, setUser] = useState(null);
   const navigate = useNavigate();
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (u) => {
-      setUser(u);
+    let mounted = true;
+    const loadUser = async () => {
+      const { data } = await supabase.auth.getSession();
+      if (mounted) setUser(data?.session?.user || null);
+    };
+    loadUser();
+    const { data: authListener } = supabase.auth.onAuthStateChange((_event, session) => {
+      setUser(session?.user || null);
     });
-    return () => unsubscribe();
+    return () => {
+      mounted = false;
+      authListener?.subscription?.unsubscribe();
+    };
   }, []);
 
   const handleLogout = async () => {
     try {
-      await signOut(auth);
-      navigate('/');
+      await supabase.auth.signOut();
     } catch (error) {
       console.error('Error al cerrar sesión:', error);
+    } finally {
       navigate('/');
     }
   };
@@ -38,9 +46,9 @@ function AdminNav() {
       </div>
       {/* Avatar del usuario */}
       <div className="admin-avatar">
-        <img src={user?.photoURL || avatarImg} alt="Avatar" className="admin-avatar-image" />
+        <img src={(user?.user_metadata && (user.user_metadata.avatar_url || user.user_metadata.picture)) || avatarImg} alt="Avatar" className="admin-avatar-image" />
         <div className="admin-avatar-info">
-          <div className="admin-avatar-name">{user?.displayName || user?.email || 'Administrador'}</div>
+          <div className="admin-avatar-name">{(user?.user_metadata && (user.user_metadata.full_name || user.user_metadata.name)) || user?.email || 'Administrador'}</div>
           <div className="admin-avatar-role">{user ? 'Conectado' : 'Invitado'}</div>
         </div>
       </div>

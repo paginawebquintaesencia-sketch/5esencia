@@ -4,15 +4,14 @@ import { Link } from 'react-router-dom';
 import Signup from './signup.jsx';
 import Login from './login.jsx';
 import './navbar.css';
-import { auth } from '../firebase';
-import { onAuthStateChanged } from 'firebase/auth';
+import supabase from '../utils/supabase';
 import avatarImg from '../img/logo.png';
 
 function Navbar() {
   const [activeLink, setActiveLink] = useState('');
   const [showModal, setShowModal] = useState(false);
   const [isLoginMode, setIsLoginMode] = useState(true);
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState(undefined);
 
   const handleClick = (link) => {
     setActiveLink(link);
@@ -28,10 +27,19 @@ function Navbar() {
   };
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (u) => {
-      setUser(u);
+    let mounted = true;
+    const loadUser = async () => {
+      const { data } = await supabase.auth.getSession();
+      if (mounted) setUser(data?.session?.user || null);
+    };
+    loadUser();
+    const { data: authListener } = supabase.auth.onAuthStateChange((_event, session) => {
+      setUser(session?.user || null);
     });
-    return () => unsubscribe();
+    return () => {
+      mounted = false;
+      authListener?.subscription?.unsubscribe();
+    };
   }, []);
 
   const modalContent = (
@@ -97,7 +105,7 @@ function Navbar() {
         </nav>
 
         <div className="auth-buttons">
-          {!user ? (
+          {user === undefined ? null : !user ? (
             <>
               <button className="btn-login" onClick={() => openModal(true)}>
                 <svg className="icon-person" width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -112,9 +120,9 @@ function Navbar() {
             </>
           ) : (
             <div className="user-info">
-              <img src={user.photoURL || avatarImg} alt="Avatar" className="nav-avatar" />
+              <img src={(user.user_metadata && (user.user_metadata.avatar_url || user.user_metadata.picture)) || avatarImg} alt="Avatar" className="nav-avatar" />
               <div className="nav-user">
-                <div className="nav-user-name">{user.displayName || 'Usuario'}</div>
+                <div className="nav-user-name">{(user.user_metadata && (user.user_metadata.full_name || user.user_metadata.name)) || 'Usuario'}</div>
                 <div className="nav-user-email">{user.email}</div>
               </div>
               <Link className="btn-register" to="/calendario">

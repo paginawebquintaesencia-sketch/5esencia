@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import './signup.css';
-import { auth } from '../firebase';
-import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
+import { mapAuthError } from './authErrors';
+import supabase from '../utils/supabase';
 
-const Signup = ({ onSwitchToLogin }) => {
+const Signup = ({ onSwitchToLogin, onSignupSuccess }) => {
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [email, setEmail] = useState('');
@@ -14,6 +14,7 @@ const Signup = ({ onSwitchToLogin }) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(false);
+  const [resent, setResent] = useState(false);
 
   const days = Array.from({ length: 31 }, (_, i) => i + 1);
   const months = [
@@ -27,17 +28,54 @@ const Signup = ({ onSwitchToLogin }) => {
     e.preventDefault();
     setError(null);
     setSuccess(false);
+    setResent(false);
     setLoading(true);
     try {
-      const { user } = await createUserWithEmailAndPassword(auth, email, password);
-      const displayName = `${firstName} ${lastName}`.trim();
-      if (displayName) {
-        await updateProfile(user, { displayName });
+      const fullName = `${firstName} ${lastName}`.trim();
+      const { data, error } = await supabase.auth.signUp({
+        email,
+        password,
+        options: {
+          emailRedirectTo: `${window.location.origin}/login`,
+          data: {
+            full_name: fullName,
+            birth_day: birthDay,
+            birth_month: birthMonth,
+            birth_year: birthYear,
+          },
+        },
+      });
+      if (error) throw error;
+      const hasSession = !!data?.session;
+      if (data?.user) {
+        if (onSignupSuccess) {
+          onSignupSuccess(hasSession);
+        }
+        if (!hasSession) {
+          setSuccess(true);
+        }
       }
-      // Opcional: podríamos guardar birthdate en Firestore si se requiere.
-      setSuccess(true);
     } catch (err) {
-      setError(err.message || 'Ocurrió un error al registrarse.');
+      console.error('Signup error:', err?.code, err);
+      setError(mapAuthError(err));
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleResend = async () => {
+    setError(null);
+    setLoading(true);
+    try {
+      const { error } = await supabase.auth.resend({
+        type: 'signup',
+        email,
+      });
+      if (error) throw error;
+      setResent(true);
+    } catch (err) {
+      console.error('Resend error:', err?.code, err);
+      setError(mapAuthError(err));
     } finally {
       setLoading(false);
     }
@@ -63,7 +101,13 @@ const Signup = ({ onSwitchToLogin }) => {
       )}
       {success && (
         <div className="success" role="status" style={{color:'#0a7', fontWeight:700, marginBottom: '12px'}}>
-          Registro completado. Ya puedes iniciar sesión.
+          Te enviamos un correo de confirmación a <strong>{email}</strong>. Abre el enlace para activar tu cuenta.
+          <div style={{ marginTop: 8, display: 'flex', gap: 8, alignItems: 'center' }}>
+            <button type="button" onClick={handleResend} disabled={loading} className="signup-button">
+              {loading ? 'Enviando...' : 'Reenviar correo'}
+            </button>
+            {resent && <span style={{ color: '#0a7', fontWeight: 600 }}>Correo reenviado.</span>}
+          </div>
         </div>
       )}
 

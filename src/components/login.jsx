@@ -1,23 +1,51 @@
 import React, { useState } from 'react';
 import './login.css';
-import { auth } from '../firebase';
-import { signInWithEmailAndPassword } from 'firebase/auth';
+import { mapAuthError } from './authErrors';
+import supabase from '../utils/supabase';
 
 const Login = ({ onSwitchToSignup, onLoginSuccess }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [notConfirmed, setNotConfirmed] = useState(false);
+  const [resent, setResent] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError(null);
     setLoading(true);
     try {
-      await signInWithEmailAndPassword(auth, email, password);
-      if (onLoginSuccess) onLoginSuccess();
+      const { data, error } = await supabase.auth.signInWithPassword({
+        email,
+        password,
+      });
+      if (error) throw error;
+      if (data?.user) {
+        onLoginSuccess && onLoginSuccess();
+      }
     } catch (err) {
-      setError(err?.message || 'No se pudo iniciar sesión.');
+      console.error('Login error:', err?.code, err);
+      setError(mapAuthError(err));
+      const msg = (err?.message || '').toLowerCase();
+      if (msg.includes('not confirmed')) {
+        setNotConfirmed(true);
+      }
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleResend = async () => {
+    setError(null);
+    setLoading(true);
+    try {
+      const { error } = await supabase.auth.resend({ type: 'signup', email });
+      if (error) throw error;
+      setResent(true);
+    } catch (err) {
+      console.error('Resend error:', err?.code, err);
+      setError(mapAuthError(err));
     } finally {
       setLoading(false);
     }
@@ -38,6 +66,17 @@ const Login = ({ onSwitchToSignup, onLoginSuccess }) => {
       {error && (
         <div className="error" role="alert" style={{color:'#b00020', fontWeight:600, marginBottom: '12px'}}>
           {error}
+        </div>
+      )}
+      {notConfirmed && (
+        <div className="warning" role="status" style={{color:'#ff9800', fontWeight:600, marginBottom: '12px'}}>
+          Tu cuenta aún no está confirmada. Revisa tu correo y confirma.
+          <div style={{ marginTop: 8, display: 'flex', gap: 8, alignItems: 'center' }}>
+            <button type="button" onClick={handleResend} disabled={loading} className="login-button">
+              {loading ? 'Enviando...' : 'Reenviar correo'}
+            </button>
+            {resent && <span style={{ color: '#0a7', fontWeight: 600 }}>Correo reenviado.</span>}
+          </div>
         </div>
       )}
 

@@ -1,6 +1,15 @@
 import React, { useState } from 'react';
 import './CalendarioPublico.css';
 import { Link } from 'react-router-dom';
+import supabase from '../utils/supabase';
+
+// Mapeo de color por tipo de arte
+const typeColorMap = {
+  Ceramica: '#e53935',   // rojo
+  Arte: '#1e88e5',       // azul
+  Fotografia: '#8e24aa', // morado
+  Abstracto: '#43a047',  // verde
+};
 
 function generateCalendarGrid(date) {
   const year = date.getFullYear();
@@ -25,58 +34,8 @@ function generateCalendarGrid(date) {
   return grid;
 }
 
-const sampleTalleres = [
-    { 
-    id: 1, 
-    title: "Pinta tu taza en cerámica", 
-    date: "2025-08-06", 
-    time: "18:00 - 20:00", 
-    instructor: "Rocío Campa", 
-    description: "Pieza de cerámica, guía paso a paso, pinceles, pigmentos ilimitados, quema final de la pieza, snacks y bebidas.", 
-    estado: 'Confirmado', 
-    color: '#3b3e6c'
-  },
-  { 
-    id: 2, 
-    title: "Pinta tu regalo para papá", 
-    date: "2025-08-13", 
-    time: "17:00 - 19:00", 
-    instructor: "Ana Soto", 
-    description: "Sorprende a papá con un regalo pintado por ti. Incluye todos los materiales y guía.", 
-    estado: 'Confirmado',
-    color: '#9c51b6'
-  },
-  { 
-    id: 3, 
-    title: "Teje tu portavasos en crochet", 
-    date: "2025-08-18", 
-    time: "10:00 - 12:00", 
-    instructor: "Laura Paz", 
-    description: "Aprende los puntos básicos de crochet y llévate a casa tu propio portavasos. Incluye hilos y gancho.", 
-    estado: 'Confirmado',
-    color: '#e67e54'
-  },
-  { 
-    id: 4, 
-    title: "Introducción al dibujo", 
-    date: "2025-08-28", 
-    time: "16:00 - 18:00", 
-    instructor: "Carlos Ruiz", 
-    description: "Explora tu lado creativo con conceptos básicos de luz, sombra y perspectiva. Materiales incluidos.", 
-    estado: 'Confirmado',
-    color: '#e45a9a'
-  },
-  { 
-    id: 5, 
-    title: "Acuarela Navideña", 
-    date: "2025-12-10", 
-    time: "17:00 - 19:00", 
-    instructor: "Ana Soto", 
-    description: "Pinta tus propias postales navideñas.", 
-    estado: 'Confirmado',
-    color: '#3b3e6c'
-  },
-];
+// Paleta de colores para celdas con talleres (asignación determinística)
+const colorPalette = ['#3b3e6c', '#9c51b6', '#e67e54', '#e45a9a', '#2a9d8f', '#e9c46a'];
 const weekdays = ['LUNES', 'MARTES', 'MIÉRCOLES', 'JUEVES', 'VIERNES', 'SÁBADO', 'DOMINGO'];
 
 function DefaultDetailView() {
@@ -116,12 +75,40 @@ function TallerDetailView({ taller }) {
 }
 
 function CalendarioPublico() {
-  
-  const talleresConfirmados = sampleTalleres.filter(t => t.estado === 'Confirmado');
-  const [currentDate, setCurrentDate] = useState(new Date('2025-08-01T12:00:00'));
-  const [selectedTallerId, setSelectedTallerId] = useState(talleresConfirmados[0]?.id || null);
+  const [talleres, setTalleres] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+  const [currentDate, setCurrentDate] = useState(new Date());
+  const [selectedTallerId, setSelectedTallerId] = useState(null);
   const [isAnimating, setIsAnimating] = useState(false);
   const [animationKey, setAnimationKey] = useState(0);
+
+  useEffect(() => {
+    const fetchTalleres = async () => {
+      setLoading(true);
+      setError(null);
+      const { data, error } = await supabase
+        .from('talleres')
+        .select('id,title,date,time,instructor,description,estado,tipo');
+      if (error) {
+        console.error('Error cargando talleres públicos:', error);
+        setError('No se pudieron cargar los talleres.');
+      } else {
+        const withColors = (data || []).map((t, idx) => ({
+          ...t,
+          color: typeColorMap[(t.tipo || '').trim()] || colorPalette[Math.abs((t.id || idx).toString().split('').reduce((a, c) => a + c.charCodeAt(0), 0)) % colorPalette.length]
+        }));
+        setTalleres(withColors);
+        // Seleccionar el primer taller del mes actual si existe
+        const year = currentDate.getFullYear();
+        const month = (currentDate.getMonth() + 1).toString().padStart(2, '0');
+        const firstOfMonth = withColors.find(t => (t.estado === 'Confirmado') && (t.date?.startsWith(`${year}-${month}-`)));
+        setSelectedTallerId(firstOfMonth?.id || null);
+      }
+      setLoading(false);
+    };
+    fetchTalleres();
+  }, []);
 
   const goToPreviousMonth = () => {
     if (isAnimating) return;
@@ -145,6 +132,7 @@ function CalendarioPublico() {
     }, 200);
   };
 
+  const talleresConfirmados = talleres.filter(t => t.estado === 'Confirmado');
   const calendarGrid = generateCalendarGrid(currentDate);
   const currentMonthName = currentDate.toLocaleString('es-ES', { month: 'long' }).toUpperCase();
   const currentYear = currentDate.getFullYear();
@@ -161,6 +149,16 @@ function CalendarioPublico() {
 
   return (
     <div className="calendario-publico-container">
+      {loading && (
+        <div className="info" role="status" style={{marginBottom: '12px', color:'#333'}}>
+          Cargando talleres...
+        </div>
+      )}
+      {error && (
+        <div className="error" role="alert" style={{marginBottom: '12px', color:'#b00020', fontWeight:600}}>
+          {error}
+        </div>
+      )}
       
       <div className="calendario-grid-area">
         
