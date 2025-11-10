@@ -21,6 +21,7 @@ import Estadisticas from './components/admin/Estadisticas.jsx';
 import HeroApp from './components/HeroApp.jsx';
 import Login from './components/login.jsx';
 import Signup from './components/signup.jsx';
+import ArtistaDetalle from './components/ArtistaDetalle.jsx';
 import supabase from './utils/supabase';
 
 function ProtectedRoute({ children }) {
@@ -154,6 +155,7 @@ export default function App() {
         <Route path="/calendario" element={<CalendarioPublico />} />
         <Route path="/galeria" element={<Galeria />} />
         <Route path="/artistas" element={<ArtistasCalendario />} />
+        <Route path="/artistas/:id" element={<ArtistaDetalle />} />
         <Route path="/admin/calendary" element={<ProtectedRoute><Calendary /></ProtectedRoute>} />
         <Route path="/admin/talleres" element={<ProtectedRoute><AdminTaller /></ProtectedRoute>} />
         <Route path="/admin/talleres-activos" element={<ProtectedRoute><TalleresActivos /></ProtectedRoute>} />

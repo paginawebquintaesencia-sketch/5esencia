@@ -1,7 +1,7 @@
 // src/components/ArtistaDetalle.jsx
 import React from 'react';
 import { useParams } from 'react-router-dom';
-import { listaArtistas } from '../datosArtistas'; // Importa los datos
+import { listaArtistas } from '../DatosArtistas.js'; // Importa los datos
 import './ArtistaDetalle.css'; // Importa el nuevo CSS
 
 // (Necesitamos la función getTagClass aquí también)

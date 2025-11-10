@@ -2,36 +2,20 @@ import React, { useEffect, useState } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import './AdminNav.css';
 import avatarImg from '../../img/logo.png';
-import supabase from '../../utils/supabase';
+// Supabase eliminado: autenticación deshabilitada
 
 function AdminNav() {
   const [user, setUser] = useState(null);
   const navigate = useNavigate();
 
   useEffect(() => {
-    let mounted = true;
-    const loadUser = async () => {
-      const { data } = await supabase.auth.getSession();
-      if (mounted) setUser(data?.session?.user || null);
-    };
-    loadUser();
-    const { data: authListener } = supabase.auth.onAuthStateChange((_event, session) => {
-      setUser(session?.user || null);
-    });
-    return () => {
-      mounted = false;
-      authListener?.subscription?.unsubscribe();
-    };
+    // Autenticación deshabilitada: el usuario permanece como invitado
+    setUser(null);
   }, []);
 
   const handleLogout = async () => {
-    try {
-      await supabase.auth.signOut();
-    } catch (error) {
-      console.error('Error al cerrar sesión:', error);
-    } finally {
-      navigate('/');
-    }
+    // Cerrar sesión no aplica sin backend: redirigir al inicio
+    navigate('/');
   };
   return (
     <aside className="admin-sidebar">

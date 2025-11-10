@@ -3,7 +3,7 @@
 import React from 'react';
 import ArtistaCard from './components/ArtistaCard.jsx'; 
 import './artistas.css'; 
-import { listaArtistas } from './datosArtistas.js'; 
+import { listaArtistas } from './DatosArtistas.js'; 
 
 
 export default function ArtistasCalendario() {

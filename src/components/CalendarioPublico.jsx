@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './CalendarioPublico.css';
 import { Link } from 'react-router-dom';
-import supabase from '../utils/supabase';
+// Supabase eliminado: uso de datos locales
 
 // Mapeo de color por tipo de arte
 const typeColorMap = {
@@ -87,24 +87,14 @@ function CalendarioPublico() {
     const fetchTalleres = async () => {
       setLoading(true);
       setError(null);
-      const { data, error } = await supabase
-        .from('talleres')
-        .select('id,title,date,time,instructor,description,estado,tipo');
-      if (error) {
-        console.error('Error cargando talleres públicos:', error);
-        setError('No se pudieron cargar los talleres.');
-      } else {
-        const withColors = (data || []).map((t, idx) => ({
-          ...t,
-          color: typeColorMap[(t.tipo || '').trim()] || colorPalette[Math.abs((t.id || idx).toString().split('').reduce((a, c) => a + c.charCodeAt(0), 0)) % colorPalette.length]
-        }));
-        setTalleres(withColors);
-        // Seleccionar el primer taller del mes actual si existe
-        const year = currentDate.getFullYear();
-        const month = (currentDate.getMonth() + 1).toString().padStart(2, '0');
-        const firstOfMonth = withColors.find(t => (t.estado === 'Confirmado') && (t.date?.startsWith(`${year}-${month}-`)));
-        setSelectedTallerId(firstOfMonth?.id || null);
-      }
+      // Conexión a base de datos deshabilitada: sin carga remota
+      const data = [];
+      const withColors = (data || []).map((t, idx) => ({
+        ...t,
+        color: typeColorMap[(t.tipo || '').trim()] || colorPalette[Math.abs((t.id || idx).toString().split('').reduce((a, c) => a + c.charCodeAt(0), 0)) % colorPalette.length]
+      }));
+      setTalleres(withColors);
+      setSelectedTallerId(null);
       setLoading(false);
     };
     fetchTalleres();

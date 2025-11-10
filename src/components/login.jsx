@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './login.css';
 import { mapAuthError } from './authErrors';
-import supabase from '../utils/supabase';
+// Supabase eliminado: autenticación deshabilitada
 
 const Login = ({ onSwitchToSignup, onLoginSuccess }) => {
   const [email, setEmail] = useState('');
@@ -16,14 +16,8 @@ const Login = ({ onSwitchToSignup, onLoginSuccess }) => {
     setError(null);
     setLoading(true);
     try {
-      const { data, error } = await supabase.auth.signInWithPassword({
-        email,
-        password,
-      });
-      if (error) throw error;
-      if (data?.user) {
-        onLoginSuccess && onLoginSuccess();
-      }
+      // Autenticación deshabilitada: mostrar mensaje informativo
+      setError('La autenticación está deshabilitada temporalmente.');
     } catch (err) {
       console.error('Login error:', err?.code, err);
       setError(mapAuthError(err));
@@ -40,9 +34,9 @@ const Login = ({ onSwitchToSignup, onLoginSuccess }) => {
     setError(null);
     setLoading(true);
     try {
-      const { error } = await supabase.auth.resend({ type: 'signup', email });
-      if (error) throw error;
-      setResent(true);
+      // Funcionalidad de reenvío deshabilitada
+      setError('El reenvío de confirmación está deshabilitado.');
+      setResent(false);
     } catch (err) {
       console.error('Resend error:', err?.code, err);
       setError(mapAuthError(err));

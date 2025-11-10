@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './signup.css';
 import { mapAuthError } from './authErrors';
-import supabase from '../utils/supabase';
+// Supabase eliminado: registro deshabilitado
 
 const Signup = ({ onSwitchToLogin, onSignupSuccess }) => {
   const [firstName, setFirstName] = useState('');
@@ -31,30 +31,8 @@ const Signup = ({ onSwitchToLogin, onSignupSuccess }) => {
     setResent(false);
     setLoading(true);
     try {
-      const fullName = `${firstName} ${lastName}`.trim();
-      const { data, error } = await supabase.auth.signUp({
-        email,
-        password,
-        options: {
-          emailRedirectTo: `${window.location.origin}/login`,
-          data: {
-            full_name: fullName,
-            birth_day: birthDay,
-            birth_month: birthMonth,
-            birth_year: birthYear,
-          },
-        },
-      });
-      if (error) throw error;
-      const hasSession = !!data?.session;
-      if (data?.user) {
-        if (onSignupSuccess) {
-          onSignupSuccess(hasSession);
-        }
-        if (!hasSession) {
-          setSuccess(true);
-        }
-      }
+      // Registro deshabilitado: mostrar mensaje informativo
+      setError('El registro de usuarios está deshabilitado temporalmente.');
     } catch (err) {
       console.error('Signup error:', err?.code, err);
       setError(mapAuthError(err));
@@ -67,12 +45,9 @@ const Signup = ({ onSwitchToLogin, onSignupSuccess }) => {
     setError(null);
     setLoading(true);
     try {
-      const { error } = await supabase.auth.resend({
-        type: 'signup',
-        email,
-      });
-      if (error) throw error;
-      setResent(true);
+      // Reenvío deshabilitado
+      setError('El reenvío de confirmación está deshabilitado.');
+      setResent(false);
     } catch (err) {
       console.error('Resend error:', err?.code, err);
       setError(mapAuthError(err));

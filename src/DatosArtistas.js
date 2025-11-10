@@ -1,23 +1,18 @@
 // src/datosArtistas.js
-
-// Importamos las fotos que ya tenías
 import fotoArtista1 from './img/log.jpg';
 import fotoArtista2 from './img/log.jpg';
 import fotoArtista3 from './img/log.jpg';
 import fotoArtista4 from './img/log.jpg';
 import fotoArtista5 from './img/log.jpg';
 import fotoArtista6 from './img/log.jpg';
+import placeholderImg from './img/logo.png';
 
-// (Aquí importarías las fotos de la galería, ej: import rocioGaleria1 from './img/rocio-g1.jpg')
-
-// Exportamos la lista para que otros archivos puedan importarla
 export const listaArtistas = [
   {
     id: 1,
     imagen: fotoArtista1,
     nombre: 'Rocio Campa',
     tags: ['Fotografía', 'Pintura', 'Dibujo', 'Artesanía'],
-    // --- NUEVOS DATOS ---
     titulo: 'ARTISTA FORMADOR',
     descripcion: 'MAESTRO QUE TRANSFORMA SU EXPERIENCIA EN CONOCIMIENTO A TRAVÉS DE TALLERES QUE INSPIRAN, ENSEÑAN Y CONECTAN CON EL ARTE.',
     talleres: 'TALLERES IMPARTIDOS: PINTA TU TAZA, PINTA TU LIENZO.',
@@ -26,12 +21,11 @@ export const listaArtistas = [
       'SU OBRA TRANSITA ENTRE EL IMPRESIONISMO Y EL REALISMO, CON UNA PROFUNDA CONEXIÓN HACIA EL PAISAJISMO Y LOS PEQUEÑOS DETALLES DEL ENTORNO.',
       'ESTÁ CONVENCIDA DE QUE NO EXISTE EL "BUEN" ARTISTA, SINO AQUEL QUE SABE MIRAR CON PROFUNDIDAD Y TRANSFORMA ESA MIRADA EN CREACIÓN.'
     ],
-    // (Usaríamos las imágenes importadas aquí)
     galeria: [
-      'https://via.placeholder.com/300x300', 
-      'https://via.placeholder.com/300x300', 
-      'https://via.placeholder.com/300x300', 
-      'https://via.placeholder.com/300x300'
+      placeholderImg,
+      placeholderImg,
+      placeholderImg,
+      placeholderImg
     ]
   },
   {

@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import './AdminTaller.css';
 import './admin/AdminNav.css';
 import AdminNav from './admin/AdminNav';
-import supabase from '../utils/supabase';
 import { Calendar } from './ui/calendar';
 import { format } from 'date-fns';
 import { es } from 'date-fns/locale';
@@ -227,16 +226,8 @@ function AdminTaller() {
     const getTalleres = async () => {
       setLoading(true);
       setLoadError(null);
-      const { data, error } = await supabase
-        .from('talleres')
-        .select('*')
-        .order('date', { ascending: true });
-      if (error) {
-        console.error('Error cargando talleres:', error);
-        setLoadError('Error cargando talleres. Verifica tu tabla "talleres" en Supabase.');
-      } else {
-        setTalleres((data || []).map(row => ({ ...row, inscritos: row.inscritos || [] })));
-      }
+      // Conexión a base de datos deshabilitada: usar estado local vacío
+      setTalleres([]);
       setLoading(false);
     };
     getTalleres();
@@ -268,27 +259,11 @@ function AdminTaller() {
       };
 
       if (normalized.id) {
-        const { error } = await supabase
-          .from('talleres')
-          .update({
-            title: normalized.title,
-            materiales: normalized.materiales,
-            instructor: normalized.instructor,
-            description: normalized.description,
-            estado: normalized.estado,
-            max: normalized.max,
-            costo: normalized.costo,
-            date: normalized.date,
-            time: normalized.time,
-            tipo: normalized.tipo,
-          })
-          .eq('id', normalized.id);
-        if (error) throw error;
-        // Actualizar estado local sin refetch
-        setTalleres(talleres.map(t => 
+        // Actualizar estado local
+        setTalleres(prev => prev.map(t => 
           t.id === normalized.id 
             ? { 
-                ...t, 
+                ...t,
                 title: normalized.title,
                 materiales: normalized.materiales,
                 instructor: normalized.instructor,
@@ -303,46 +278,42 @@ function AdminTaller() {
             : t
         ));
       } else {
-        const { error } = await supabase
-          .from('talleres')
-          .insert([{ 
-            title: normalized.title,
-            materiales: normalized.materiales,
-            instructor: normalized.instructor,
-            description: normalized.description,
-            estado: normalized.estado,
-            max: normalized.max,
-            costo: normalized.costo,
-            date: normalized.date,
-            time: normalized.time,
-            tipo: normalized.tipo,
-            inscritos: [],
-          }]);
-        if (error) throw error;
-        // Refrescar lista para obtener el nuevo registro con su id
-        const { data: refreshed, error: refreshError } = await supabase
-          .from('talleres')
-          .select('*')
-          .order('date', { ascending: true });
-        if (refreshError) throw refreshError;
-        setTalleres((refreshed || []).map(row => ({ ...row, inscritos: row.inscritos || [] })));
+        // Crear nuevo taller en estado local
+        const newId = Date.now();
+        const nuevo = {
+          id: newId,
+          title: normalized.title,
+          materiales: normalized.materiales,
+          instructor: normalized.instructor,
+          description: normalized.description,
+          estado: normalized.estado,
+          max: normalized.max,
+          costo: normalized.costo,
+          date: normalized.date,
+          time: normalized.time,
+          tipo: normalized.tipo,
+          inscritos: [],
+        };
+        setTalleres(prev => {
+          const next = [...prev, nuevo].sort((a, b) => (a.date || '').localeCompare(b.date || ''));
+          return next;
+        });
       }
       setIsFormVisible(false);
       setSelectedTaller(null);
     } catch (e) {
       console.error('Error guardando taller:', e);
-      alert(`Error al guardar el taller: ${e?.message || 'Verifica tu configuración de Supabase.'}`);
+      alert(`Error al guardar el taller.`);
     }
   };
   const handleDelete = async (tallerId) => {
     if (!window.confirm("¿Estás seguro de que quieres eliminar este taller?")) return;
     try {
-      const { error } = await supabase.from('talleres').delete().eq('id', tallerId);
-      if (error) throw error;
-      setTalleres(talleres.filter(t => t.id !== tallerId));
+      // Eliminar del estado local
+      setTalleres(prev => prev.filter(t => t.id !== tallerId));
     } catch (e) {
       console.error('Error eliminando taller:', e);
-      alert('No se pudo eliminar el taller. Revisa Supabase.');
+      alert('No se pudo eliminar el taller.');
     }
   };
   const handleViewRegistrations = (tallerId) => {
@@ -351,29 +322,15 @@ function AdminTaller() {
   const handleCancelarInscripcion = async (tallerId, inscritoId) => {
     if (!window.confirm("¿Seguro que quieres cancelar esta inscripción?")) return;
     try {
-      const { data, error } = await supabase
-        .from('talleres')
-        .select('inscritos')
-        .eq('id', tallerId)
-        .single();
-      if (error) throw error;
-      const currentInscritos = data?.inscritos || [];
-      const updatedInscritos = currentInscritos.filter(i => i.id !== inscritoId);
-      const { error: updError } = await supabase
-        .from('talleres')
-        .update({ inscritos: updatedInscritos })
-        .eq('id', tallerId);
-      if (updError) throw updError;
-      setTalleres(prevTalleres => 
-        prevTalleres.map(taller => 
-          taller.id === tallerId 
-            ? { ...taller, inscritos: updatedInscritos } 
-            : taller
-        )
-      );
+      // Actualizar estado local
+      setTalleres(prev => prev.map(t => {
+        if (t.id !== tallerId) return t;
+        const updatedInscritos = (t.inscritos || []).filter(i => i.id !== inscritoId);
+        return { ...t, inscritos: updatedInscritos };
+      }));
     } catch (e) {
       console.error('Error cancelando inscripción:', e);
-      alert('No se pudo cancelar la inscripción. Revisa Supabase.');
+      alert('No se pudo cancelar la inscripción.');
     }
   };
 
@@ -397,7 +354,7 @@ function AdminTaller() {
         {/* Mensaje si aún no hay datos y no está cargando */}
         {!loading && talleres.length === 0 && (
           <div className="error" role="alert" style={{marginBottom: '12px', color:'#b00020', fontWeight:600}}>
-            No hay talleres cargados. Verifica tu tabla "talleres" en Supabase.
+            No hay talleres cargados.
           </div>
         )}
         <button onClick={handleAddNew} className="btn-add-new">
