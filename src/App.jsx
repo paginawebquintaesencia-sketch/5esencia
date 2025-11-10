@@ -22,100 +22,19 @@ import HeroApp from './components/HeroApp.jsx';
 import Login from './components/login.jsx';
 import Signup from './components/signup.jsx';
 import ArtistaDetalle from './components/ArtistaDetalle.jsx';
-import supabase from './utils/supabase';
+// Supabase eliminado: se retiró el cliente y autenticación
+// import supabase from './utils/supabase';
 
 function ProtectedRoute({ children }) {
+  // Supabase eliminado: protección básica sin autenticación real
   const location = useLocation();
-  const [user, setUser] = React.useState(undefined);
-  const [isAdmin, setIsAdmin] = React.useState(false);
-  const navigate = useNavigate();
-
-  React.useEffect(() => {
-    let isMounted = true;
-    (async () => {
-      const { data: sessionData } = await supabase.auth.getSession();
-      if (!isMounted) return;
-
-      const currentUser = sessionData?.session?.user ?? null;
-      setUser(currentUser);
-
-      if (currentUser) {
-        const { data: profile, error } = await supabase
-          .from('profiles')
-          .select('role')
-          .eq('id', currentUser.id)
-          .single();
-
-        if (error) {
-          console.error('Error fetching user profile:', error);
-          setIsAdmin(false);
-          // Optionally, redirect to login or show an error
-          navigate('/login', { replace: true, state: { from: location.pathname, message: 'Error al obtener el perfil de usuario.' } });
-          return;
-        }
-
-        if (profile && profile.role === 'admin') {
-          setIsAdmin(true);
-        } else {
-          setIsAdmin(false);
-          // Redirect non-admin users from admin routes
-          if (location.pathname.startsWith('/admin')) {
-            navigate('/login', { replace: true, state: { from: location.pathname, message: 'No tienes permisos de administrador.' } });
-          }
-        }
-      } else {
-        setIsAdmin(false);
-      }
-    })();
-
-    const { data: authListener } = supabase.auth.onAuthStateChange((_event, session) => {
-      const currentUser = session?.user ?? null;
-      setUser(currentUser);
-      if (currentUser) {
-        supabase
-          .from('profiles')
-          .select('role')
-          .eq('id', currentUser.id)
-          .single()
-          .then(({ data: profile, error }) => {
-            if (error) {
-              console.error('Error fetching user profile on auth state change:', error);
-              setIsAdmin(false);
-              navigate('/login', { replace: true, state: { from: location.pathname, message: 'Error al obtener el perfil de usuario.' } });
-              return;
-            }
-            if (profile && profile.role === 'admin') {
-              setIsAdmin(true);
-            } else {
-              setIsAdmin(false);
-              if (location.pathname.startsWith('/admin')) {
-                navigate('/login', { replace: true, state: { from: location.pathname, message: 'No tienes permisos de administrador.' } });
-              }
-            }
-          });
-      } else {
-        setIsAdmin(false);
-      }
-    });
-    return () => {
-      isMounted = false;
-      authListener.subscription.unsubscribe();
-    };
-  }, [location.pathname, navigate]);
-
-  if (user === undefined) return null; // Still checking auth state
-  if (!user) return <Navigate to="/login" replace state={{ from: location.pathname }} />; // Not logged in
-
-  // If user is logged in, but not an admin, and trying to access an admin route
-  if (user && !isAdmin && location.pathname.startsWith('/admin')) {
+  const user = null; // sin sesión
+  const isAdmin = false; // sin roles
+  if (!user) return <Navigate to="/login" replace state={{ from: location.pathname }} />;
+  if (!isAdmin && location.pathname.startsWith('/admin')) {
     return <Navigate to="/login" replace state={{ from: location.pathname, message: 'No tienes permisos de administrador.' }} />;
   }
-
-  // If user is logged in and is admin, or logged in and not admin but not on an admin route
-  if (user && isAdmin) return children;
-  if (user && !isAdmin && !location.pathname.startsWith('/admin')) return children;
-
-  return null; // Should not reach here
+  return children;
 }
 
 function LoginRoute() {
