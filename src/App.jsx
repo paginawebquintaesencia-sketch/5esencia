@@ -22,20 +22,12 @@ import HeroApp from './components/HeroApp.jsx';
 import Login from './components/login.jsx';
 import Signup from './components/signup.jsx';
 import ArtistaDetalle from './components/ArtistaDetalle.jsx';
-import GaleriaCategoria from './GaleriaCategoria';
-import ObraDetalle from './ObraDetalle';
 // Supabase eliminado: se retiró el cliente y autenticación
 // import supabase from './utils/supabase';
 
 function ProtectedRoute({ children }) {
-  // Supabase eliminado: protección básica sin autenticación real
-  const location = useLocation();
-  const user = null; // sin sesión
-  const isAdmin = false; // sin roles
-  if (!user) return <Navigate to="/login" replace state={{ from: location.pathname }} />;
-  if (!isAdmin && location.pathname.startsWith('/admin')) {
-    return <Navigate to="/login" replace state={{ from: location.pathname, message: 'No tienes permisos de administrador.' }} />;
-  }
+  // Supabase eliminado: por ahora las rutas protegidas permiten acceso directo
+  // Si deseas volver a exigir autenticación, podemos añadir un guard simple.
   return children;
 }
 
@@ -75,8 +67,6 @@ export default function App() {
         <Route path="/signup" element={<SignupRoute />} />
         <Route path="/calendario" element={<CalendarioPublico />} />
         <Route path="/galeria" element={<Galeria />} />
-        <Route path="/galeria/:categoria" element={<GaleriaCategoria />} />
-        <Route path="/galeria/:categoria/:obraId" element={<ObraDetalle />} />
         <Route path="/artistas" element={<ArtistasCalendario />} />
         <Route path="/artistas/:id" element={<ArtistaDetalle />} />
         <Route path="/admin/calendary" element={<ProtectedRoute><Calendary /></ProtectedRoute>} />

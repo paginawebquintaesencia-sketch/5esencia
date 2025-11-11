@@ -66,14 +66,13 @@ function Navbar() {
             >
               Galería
             </Link>
-            <Link 
+          <Link 
               className={`nav-link ${activeLink === 'artistas' ? 'active' : ''}`} 
               to="/artistas" 
               onClick={() => handleClick('artistas')}
             >
               Artistas
             </Link>
-            {/* Temporalmente comentados hasta implementar estas secciones
             <Link 
               className={`nav-link ${activeLink === 'nosotros' ? 'active' : ''}`} 
               to="/nosotros" 
@@ -88,7 +87,6 @@ function Navbar() {
             >
               Contacto
             </Link>
-            */}
           </div>
         </nav>
 
