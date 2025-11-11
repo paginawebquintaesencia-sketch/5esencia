@@ -1,105 +1,187 @@
 .galeria-container {
-  width: 100vw;
-  height: 100vh;
-  margin: 0;
-  padding: 20px;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 40px 20px;
+  background-color: #fff;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
+    Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+.galeria-header {
   text-align: center;
-  background-color: #f5f5f5;
-  overflow-y: auto; /* Permite scroll si hay muchas imágenes */
-  box-sizing: border-box;
+  margin-bottom: 50px;
+  position: relative;
 }
 
 .galeria-title {
-  color: #d81b60;
-  font-size: 2.5em;
-  margin-bottom: 10px;
+  font-size: 3.5rem;
+  font-weight: 700;
+  margin: 0;
+  background: linear-gradient(90deg, #E91E63, #a855f7);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 .galeria-subtitle {
-  color: #666;
-  font-size: 1.2em;
-  margin-bottom: 20px;
-}
-
-.galeria-filters {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-bottom: 20px;
-}
-
-.filter-dot {
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  background-color: #9c27b0;
-  margin: 0 5px;
-}
-
-.filter-dot.active {
-  background-color: #2196f3;
+  font-size: 1.1rem;
+  color: #555;
+  margin: 10px 0 0 0;
 }
 
 .filter-button {
-  background-color: #ff5722;
-  color: white;
-  border: none;
-  padding: 5px 10px;
-  border-radius: 5px;
-  margin-left: 10px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
+    Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: none;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  padding: 6px 12px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: #333;
   cursor: pointer;
-}
-
-.galeria-images {
   display: flex;
-  justify-content: space-between;
+  align-items: center;
+  gap: 6px;
+  transition: background-color 0.3s ease;
 }
 
-.galeria-images img {
-  width: 24%;
-  height: auto;
-  border-radius: 5px;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+.filter-button:hover {
+  background-color: #f4f4f4;
 }
 
-.galeria-grid {
+.category-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 20px;
-  padding: 20px;
-  justify-items: center;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 30px;
 }
 
-.galeria-grid img {
+.category-card-wrapper {
+  position: relative;
+  text-align: center;
+}
+
+.category-dot {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  margin: 0 auto 15px auto;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.category-card {
+  display: block;
+  position: relative;
+  height: 350px;
+  border-radius: 12px;
+  overflow: hidden;
+  text-decoration: none;
+  transition: transform 0.3s ease;
+}
+
+.category-card:hover {
+  transform: translateY(-5px);
+}
+
+.card-background {
+  position: absolute;
+  top: 0;
+  left: 0;
   width: 100%;
-  height: auto;
-  border-radius: 5px;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-  transition: transform 0.3s;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+  transition: transform 0.4s ease;
 }
 
-.galeria-grid img:hover {
+.category-card:hover .card-background {
   transform: scale(1.05);
 }
 
-.filtro-tooltip {
+.card-overlay {
   position: absolute;
-  top: 110%;
+  top: 0;
   left: 0;
-  background: #fff;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
-  padding: 10px 15px;
-  z-index: 10;
-  color: #333;
-  font-size: 1em;
-  min-width: 120px;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(180deg, rgba(0,0,0,0) 40%, rgba(0,0,0,0.8) 100%);
+}
+
+.card-title {
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  right: 20px;
+  margin: 0;
+  font-size: 1.75rem;
+  font-weight: 600;
+  color: #fff;
   text-align: left;
 }
-.filtro-tooltip div {
-  margin-bottom: 5px;
+
+@media (max-width: 992px) {
+  .galeria-title {
+    font-size: 3rem;
+  }
+  .category-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }
-.filtro-tooltip div:last-child {
-  margin-bottom: 0;
+
+@media (max-width: 576px) {
+  .galeria-title {
+    font-size: 2.5rem;
+  }
+  .galeria-header {
+    margin-bottom: 30px;
+  }
+  .category-grid {
+    grid-template-columns: 1fr;
+  }
+  .filter-button {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
+    Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    position: static;
+    margin-top: 20px;
+    display: inline-flex;
+  }
+}
+
+.filter-dropdown {
+  position: absolute;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
+    Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  top: 60px;
+  right: 10px;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  border: 1px solid #eee;
+  z-index: 10;
+  width: 220px;
+  padding: 8px 0;
+}
+
+.filter-dropdown-item {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
+    Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  display: block;
+  width: 100%;
+  padding: 10px 15px;
+  background: none;
+  border: none;
+  
+  color: #333;
+  text-decoration: none;
+  font-size: 0.95rem;
+  text-align: left;
+  cursor: pointer;
+}
+
+.filter-dropdown-item:hover {
+  background-color: #f4f4f7;
 }

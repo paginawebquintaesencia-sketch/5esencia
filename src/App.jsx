@@ -22,6 +22,8 @@ import HeroApp from './components/HeroApp.jsx';
 import Login from './components/login.jsx';
 import Signup from './components/signup.jsx';
 import ArtistaDetalle from './components/ArtistaDetalle.jsx';
+import GaleriaCategoria from './GaleriaCategoria';
+import ObraDetalle from './ObraDetalle';
 // Supabase eliminado: se retiró el cliente y autenticación
 // import supabase from './utils/supabase';
 
@@ -73,6 +75,8 @@ export default function App() {
         <Route path="/signup" element={<SignupRoute />} />
         <Route path="/calendario" element={<CalendarioPublico />} />
         <Route path="/galeria" element={<Galeria />} />
+        <Route path="/galeria/:categoria" element={<GaleriaCategoria />} />
+        <Route path="/galeria/:categoria/:obraId" element={<ObraDetalle />} />
         <Route path="/artistas" element={<ArtistasCalendario />} />
         <Route path="/artistas/:id" element={<ArtistaDetalle />} />
         <Route path="/admin/calendary" element={<ProtectedRoute><Calendary /></ProtectedRoute>} />
