@@ -36,10 +36,10 @@ function ObraDetalle() {
           />
           <div className="obra-category-tag">
             <span 
-              className="category-dot" 
+              className="categoria-dot" 
               style={{ backgroundColor: categoryColors[categoria] || '#ccc' }}
             ></span>
-            <span>{categoriaFormateada}</span>
+            <span>{categoriaFormateada.toUpperCase()}</span>
           </div>
         </div>
 
@@ -59,7 +59,7 @@ function ObraDetalle() {
 
           <div className="obra-info-item obra-descripcion">
             <strong>DESCRIPCIÓN:</strong>
-            {obra.descripcion}
+            {obra.descripcion.toUpperCase()}
           </div>
           
           <button className="obra-comprar-btn">

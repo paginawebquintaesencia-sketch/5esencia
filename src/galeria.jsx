@@ -2,36 +2,36 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import './galeria.css';
 
-import imgFotografia from './img/log.jpg';
-import imgPintura from './img/log.jpg';
-import imgDibujo from './img/log.jpg';
-import imgArtesania from './img/log.jpg';
+const imgFotografia = 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80';
+const imgPintura = 'https://images.unsplash.com/photo-1513360371669-4f3dd7102086?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80';
+const imgDibujo = 'https://images.unsplash.com/photo-1605702208740-3b0404038c46?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80';
+const imgArtesania = 'https://images.unsplash.com/photo-1599422472403-851d7ea26b0e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80';
 
 const categories = [
-  {
+{
   title: 'FOTOGRAFÍA',
-  color: '#3b82f6', 
+  color: '#3b82f6',
   path: '/galeria/fotografia',
   image: imgFotografia
-  },
-  {
+},
+{
   title: 'PINTURA',
   color: '#a855f7',
   path: '/galeria/pintura',
   image: imgPintura
-  },
-  {
+},
+{
   title: 'DIBUJO',
   color: '#E91E63',
   path: '/galeria/dibujo',
   image: imgDibujo
-  },
-  {
+},
+{
   title: 'ARTESANÍA',
   color: '#f97316',
   path: '/galeria/artesania',
   image: imgArtesania
-  }
+}
 ];
 
 function Galeria() {
@@ -51,51 +51,47 @@ function Galeria() {
   };
 
   return (
-  <div className="galeria-container"> 
-    <header className="galeria-header">
-      <h1 className="galeria-title">Galería de Arte</h1>
+    <div className="galeria-container">
+      <header className="galeria-header">
+        <h1 className="galeria-title">Galería de Arte</h1>
         <p className="galeria-subtitle">
-           Explora nuestra colección de obras de arte de artistas quintaesencia.
+          Explora nuestra colección de obras de arte de artistas quintaesencia.
         </p>
         <button className="filter-button" onClick={() => setIsFilterOpen(!isFilterOpen)}>
-            <img src="src/img/filtrar.png" width="16" height="16" />
-            Filtros
+          <img src="src/img/filtrar.png" width="16" height="16" />
+          Filtros
         </button>
 
-        {isFilterOpen && (
-          <div className="filter-dropdown">
-            <button 
-              className="filter-dropdown-item" 
-              onClick={() => handleFilterClick('all')}
+    {isFilterOpen && (
+      <div className="filter-dropdown">
+        <button className="filter-dropdown-item" onClick={() => handleFilterClick('all')}>
+          Todas las categorías
+        </button>
+        {categories.map((category) => (
+          <button
+            key={category.title}
+            className="filter-dropdown-item"
+            onClick={() => handleFilterClick(category.title)}
             >
-              Todas las categorías
-            </button>
-            
-            {categories.map((category) => (
-              <button
-                key={category.title}
-                className="filter-dropdown-item"
-                onClick={() => handleFilterClick(category.title)}
-              >
-                {category.title}
-              </button>
-            ))}
-          </div>
-        )}
+            {category.title}
+          </button>
+        ))}
+      </div>
+    )}
     </header>
 
-      <section className="category-grid">
+    <section className="category-grid">
       {filteredCategories.map((category) => (
-      <div className="category-card-wrapper" key={category.title}>
+        <div className="category-card-wrapper" key={category.title}>
         <div className="category-dot" style={{ backgroundColor: category.color }}></div>
-          <Link to={category.path} className="category-card">
-            <div className="card-background" style={{ backgroundImage: `url(${category.image})` }}></div>
-            <div className="card-overlay"></div>
-            <h2 className="card-title">{category.title}</h2>
-          </Link>
+        <Link to={category.path} className="category-card">
+        <div className="card-background" style={{ backgroundImage: `url(${category.image})` }}></div>
+        <div className="card-overlay"></div>
+        <h2 className="card-title">{category.title}</h2>
+        </Link>
         </div>
       ))}
-      </section>
+    </section>
     </div>
   );
 }
