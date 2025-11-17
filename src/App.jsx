@@ -27,6 +27,10 @@ import ObraDetalle from './ObraDetalle';
 // Supabase eliminado: se retiró el cliente y autenticación
 // import supabase from './utils/supabase';
 
+import PerfilCliente from './components/PerfilCliente.jsx';
+import EditarPerfil from './components/EditarPerfil.jsx';
+// ...
+
 function ProtectedRoute({ children }) {
   // Supabase eliminado: por ahora las rutas protegidas permiten acceso directo
   // Si deseas volver a exigir autenticación, podemos añadir un guard simple.
@@ -73,6 +77,8 @@ export default function App() {
         <Route path="/galeria/:categoria/:obraId" element={<ObraDetalle />} />
         <Route path="/artistas" element={<ArtistasCalendario />} />
         <Route path="/artistas/:id" element={<ArtistaDetalle />} />
+        <Route path="/perfil" element={<PerfilCliente />} />
+        <Route path="/perfil/editar" element={<EditarPerfil />} />
         <Route path="/admin/calendary" element={<ProtectedRoute><Calendary /></ProtectedRoute>} />
         <Route path="/admin/talleres" element={<ProtectedRoute><AdminTaller /></ProtectedRoute>} />
         <Route path="/admin/talleres-activos" element={<ProtectedRoute><TalleresActivos /></ProtectedRoute>} />
@@ -83,6 +89,8 @@ export default function App() {
         <Route path="/admin/contenido" element={<ProtectedRoute><AdminContenido /></ProtectedRoute>} />
         <Route path="/inscripciones/:tallerId" element={<InscripcionForm />} />
         <Route path="/admin" element={<Navigate to="/admin/talleres" replace />} />
+
+// ...
       </Routes>
       {!isAdminRoute && <Footer />}
       <Analytics />

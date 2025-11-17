@@ -1,0 +1,182 @@
+/* src/components/PerfilCliente.css */
+
+/* --- NUEVO CONTENEDOR PRINCIPAL --- */
+.perfil-container-twitter {
+  max-width: 900px; /* Un poco más angosto, estilo feed */
+  margin: 40px auto;
+  padding: 0 20px;
+  font-family: 'Poppins', system-ui, sans-serif;
+}
+
+/* --- NUEVA CABECERA --- */
+.perfil-header-twitter {
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+  border: 1px solid #e5e7eb;
+  margin-bottom: 30px;
+  /* overflow: hidden; */ /* Lo quitamos para que el avatar se salga */
+}
+
+.perfil-banner {
+  height: 250px;
+  background-color: #e0e0e0; /* Color de fondo mientras carga */
+  background-size: cover;
+  background-position: center;
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
+}
+
+.perfil-info-bar {
+  display: flex;
+  flex-wrap: wrap; /* Para móviles */
+  justify-content: space-between;
+  align-items: flex-end;
+  padding: 20px 30px;
+  gap: 20px;
+}
+
+.perfil-avatar-info-wrapper {
+  display: flex;
+  align-items: flex-start;
+  gap: 20px;
+}
+
+.perfil-avatar-twitter {
+  width: 130px;
+  height: 130px;
+  border-radius: 50%;
+  border: 4px solid #ffffff; /* Borde blanco sobre el banner */
+  object-fit: cover;
+  margin-top: -85px; /* --- ¡LA MAGIA! Sube el avatar --- */
+  position: relative;
+  z-index: 2;
+  background-color: #fff; /* Fondo por si la imagen es transparente */
+}
+
+.perfil-name-block {
+  padding-top: 10px; /* Espacio para que se alinee bien */
+}
+
+.perfil-nombre {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: #1f2740;
+  margin: 0 0 5px 0;
+}
+
+.perfil-email {
+  font-size: 1rem;
+  color: #64748b;
+  margin: 0;
+  word-break: break-all;
+}
+
+.btn-perfil-editar-twitter {
+  background-color: transparent;
+  color: #9F62C0;
+  border: 2px solid #9F62C0;
+  padding: 10px 20px;
+  border-radius: 30px;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.95rem;
+  transition: all 0.2s ease;
+  height: fit-content; /* Para que se alinee bien */
+  white-space: nowrap;
+}
+.btn-perfil-editar-twitter:hover {
+  background-color: #9F62C0;
+  color: #ffffff;
+}
+
+/* --- CUERPO DEL PERFIL (talleres) --- */
+/* Estos estilos ya los tenías y se quedan igual */
+.perfil-seccion {
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 30px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+  border: 1px solid #e5e7eb;
+}
+
+.perfil-seccion h3 {
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin: 0 0 20px 0;
+  border-bottom: 1px solid #e5e7eb;
+  padding-bottom: 15px;
+  background: linear-gradient(90deg, #f97316, #dc3fc5, #a855f7, #2a63bf);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  display: inline-block;
+}
+
+.lista-talleres-perfil {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.item-taller-perfil {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 15px;
+  padding: 15px;
+  border-radius: 8px;
+  background: #f8fafc;
+  border: 1px solid #e5e7eb;
+}
+
+.taller-titulo {
+  font-weight: 600;
+  color: #1f2740;
+}
+.taller-fecha {
+  font-size: 0.9rem;
+  color: #64748b;
+}
+
+.taller-ver-detalle {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #3b82f6; /* Azul */
+  text-decoration: none;
+}
+.taller-ver-detalle:hover {
+  text-decoration: underline;
+}
+
+/* --- Responsividad --- */
+@media (max-width: 768px) {
+  .perfil-info-bar {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .perfil-avatar-twitter {
+    width: 100px;
+    height: 100px;
+    margin-top: -60px; /* Más pequeño para móviles */
+  }
+  .perfil-nombre {
+    font-size: 1.5rem;
+  }
+  .perfil-email {
+    font-size: 0.9rem;
+  }
+  .btn-perfil-editar-twitter {
+    width: 100%;
+    text-align: center;
+  }
+}
+
+/* --- LIMPIEZA: Ocultamos estilos antiguos --- */
+.perfil-layout, .perfil-sidebar, .perfil-contenido, .perfil-avatar, .btn-perfil-editar, .btn-perfil-logout {
+  display: none;
+}

@@ -158,3 +158,16 @@ html {
   outline: 2px solid #f97316;
   outline-offset: 2px;
 }
+
+.user-info-link {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  padding: 4px 8px;
+  border-radius: 8px;
+  transition: background-color 0.2s ease;
+}
+.user-info-link:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}

@@ -1,3 +1,5 @@
+// src/components/Navbar.jsx
+
 import { useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { Link } from 'react-router-dom';
@@ -26,8 +28,7 @@ function Navbar() {
   };
 
   useEffect(() => {
-    // Autenticación deshabilitada: el usuario permanece como no autenticado
-    setUser(null);
+    // --- FIN DEL CAMBIO ---
   }, []);
 
   const modalContent = (
@@ -90,9 +91,11 @@ function Navbar() {
           </div>
         </nav>
 
+        {/* --- CAMBIO EN BOTONES DE AUTENTICACIÓN --- */}
         <div className="auth-buttons">
           {!user ? (
             <>
+              {/* Esto se muestra si NO hay sesión */}
               <button className="btn-login" onClick={() => openModal(true)}>
                 <svg className="icon-person" width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
@@ -105,18 +108,24 @@ function Navbar() {
               </Link>
             </>
           ) : (
-            <div className="user-info">
-              <img src={(user.user_metadata && (user.user_metadata.avatar_url || user.user_metadata.picture)) || avatarImg} alt="Avatar" className="nav-avatar" />
-              <div className="nav-user">
-                <div className="nav-user-name">{(user.user_metadata && (user.user_metadata.full_name || user.user_metadata.name)) || 'Usuario'}</div>
-                <div className="nav-user-email">{user.email}</div>
-              </div>
+            <>
+              {/* Esto se muestra si SÍ hay sesión */}
               <Link className="btn-register" to="/calendario">
                 Calendario
               </Link>
-            </div>
+              
+              {/* Enlace al perfil del usuario */}
+              <Link to="/perfil" className="user-info-link">
+                <img src={(user.user_metadata && (user.user_metadata.avatar_url || user.user_metadata.picture)) || avatarImg} alt="Avatar" className="nav-avatar" />
+                <div className="nav-user">
+                  <div className="nav-user-name">{(user.user_metadata && (user.user_metadata.full_name || user.user_metadata.name)) || 'Usuario'}</div>
+                </div>
+              </Link>
+            </>
           )}
         </div>
+        {/* --- FIN DEL CAMBIO --- */}
+
       </div>
       {showModal && createPortal(modalContent, document.body)}
     </header>
@@ -124,5 +133,3 @@ function Navbar() {
 }
 
 export default Navbar;
-
-

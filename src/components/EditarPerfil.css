@@ -1,0 +1,171 @@
+/* src/components/EditarPerfil.css */
+
+@import './AdminTaller.css'; 
+@import './PerfilCliente.css'; 
+
+/* Layout (de pasos anteriores) */
+.editar-perfil-container {
+  max-width: 650px;
+  margin: 40px auto;
+  padding: 20px;
+  font-family: 'Poppins', system-ui, sans-serif;
+}
+.editar-perfil-form {
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 2.5rem;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+  border: 1px solid #e5e7eb;
+}
+.editar-perfil-header {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  border-bottom: 1px solid #e5e7eb;
+  padding-bottom: 20px;
+  margin-bottom: 10px;
+}
+.perfil-avatar-small {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid #f0f0f0;
+}
+.editar-perfil-form p {
+  font-size: 1rem;
+  color: #64748b;
+  margin-bottom: 30px;
+}
+
+/* Título con Gradiente (de pasos anteriores) */
+.editar-perfil-header h2 {
+  font-size: 1.75rem;
+  font-weight: 700;
+  margin: 0;
+  background: linear-gradient(90deg, #f97316, #ef44d4, #a855f7, #3b82f6);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  display: inline-block;
+}
+
+/* Arreglo Relieve/Contorno para Form Row (de pasos anteriores) */
+.form-row .form-group input[type="text"] {
+  width: 100%;
+  padding: 0.5rem 0.75rem;
+  border: 1px solid #ced4da; 
+  border-radius: 0.375rem;
+  box-sizing: border-box;
+  font-size: 0.875rem;
+  font-family: inherit;
+  background-color: #ffffff;
+  color: #333;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  outline: none;
+}
+.form-row .form-group input[type="text"]:focus {
+  border-color: #0b0f3b;
+  box-shadow: 0 0 0 3px rgba(11, 15, 59, 0.1);
+}
+
+/* Botones Redondeados con Gradiente (de pasos anteriores) */
+.form-actions-editar {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 30px;
+  padding-top: 20px;
+  border-top: 1px solid #e5e7eb;
+}
+.form-actions-editar .btn-save {
+  padding: 10px 24px;
+  border-radius: 30px; 
+  font-weight: 700;
+  background: linear-gradient(90deg, #f97316 0%, #ef44d4 100%);
+  color: #ffffff;
+  border: none;
+  background-size: 200% auto;
+  background-position: left center;
+  transition: background-position 0.3s ease, transform 0.2s ease, box-shadow 0.2s ease;
+}
+.form-actions-editar .btn-save:hover {
+  background-position: right center;
+  color: #ffffff;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(239, 68, 212, 0.3);
+}
+.form-actions-editar .btn-cancel {
+  padding: 10px 24px;
+  border-radius: 30px; 
+  font-weight: 700;
+  font-size: 0.875rem;
+  text-decoration: none;
+  line-height: 1.5;
+  background-color: transparent;
+  color: #ef44d4; 
+  border: 2px solid #ef44d4;
+  transition: all 0.3s ease;
+}
+.form-actions-editar .btn-cancel:hover {
+  background-color: #ef44d4;
+  color: #ffffff;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(239, 68, 212, 0.3);
+}
+
+.file-upload-hidden {
+  display: none;
+}
+
+/* 2. El contenedor */
+.file-upload-wrapper {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  padding: 8px; 
+  border: 1px solid #ced4da; 
+  border-radius: 0.375rem; 
+  box-sizing: border-box;
+  background-color: #ffffff;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+/* Estilo de :focus, igual que los otros inputs */
+.file-upload-wrapper:has(:focus-visible) {
+  border-color: #0b0f3b;
+  box-shadow: 0 0 0 3px rgba(11, 15, 59, 0.1);
+}
+
+/* 3. El botón falso (la etiqueta) */
+.file-upload-button {
+  background-color: #f0f0f0; 
+  color: #333;
+  border: 1px solid #ccc;
+  padding: 6px 14px;
+  border-radius: 0.25rem; 
+  font-weight: 500;
+  font-size: 0.875rem;
+  font-family: 'Poppins', system-ui, sans-serif;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  white-space: nowrap; 
+}
+
+.file-upload-button:hover {
+  background-color: #e0e0e0; 
+}
+
+/* 4. El texto "Sin archivos seleccionados" */
+.file-upload-filename {
+  font-size: 0.9rem;
+  color: #64748b;
+  margin-left: 12px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.input-file {
+  display: none;
+}
