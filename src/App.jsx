@@ -23,13 +23,12 @@ import Login from './components/login.jsx';
 import Signup from './components/signup.jsx';
 import ArtistaDetalle from './components/ArtistaDetalle.jsx';
 import GaleriaCategoria from './GaleriaCategoria';
-import ObraDetalle from './ObraDetalle';
+import ObraDetalle from './obraDetalle';
 // Supabase eliminado: se retiró el cliente y autenticación
 // import supabase from './utils/supabase';
 
 import PerfilCliente from './components/PerfilCliente.jsx';
 import EditarPerfil from './components/EditarPerfil.jsx';
-// ...
 
 function ProtectedRoute({ children }) {
   // Supabase eliminado: por ahora las rutas protegidas permiten acceso directo
