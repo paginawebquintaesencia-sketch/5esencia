@@ -162,6 +162,12 @@
 /* Mobile layout */
 @media (max-width: 1024px) {
   .menu-toggle { display: inline-flex; }
+  /* Orden y alineación para que el toggle quede a la derecha */
+  .nav-inner { justify-content: flex-start; }
+  .brand { order: 1; }
+  nav { order: 2; }
+  .menu-toggle { order: 3; margin-left: auto; cursor: pointer; }
+  .menu-toggle:focus-visible { outline: 2px solid currentColor; }
   /* Links del panel móvil en color negro para mejor contraste */
   .nav-links .nav-link { color: #000; }
   .nav-links .nav-link.active { color: #000; }
