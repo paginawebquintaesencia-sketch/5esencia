@@ -117,6 +117,36 @@
   color: white !important;
 }
 
+/* Hover slide con fondo negro deslizante (solo este botón) */
+.btn-outline.btn-slide:hover {
+  color: #ffffff !important;
+  background: transparent !important; /* anulamos el fill directo */
+}
+.btn-slide {
+  position: relative !important;
+  overflow: hidden !important;
+  transition: color 220ms ease !important;
+  z-index: 0 !important; /* asegura texto sobre el overlay */
+}
+.btn-slide::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: #3c4043; /* negro */
+  transform: translateX(-100%);
+  transition: transform 220ms ease;
+  z-index: -1; /* coloca el overlay detrás del texto */
+  pointer-events: none; /* nunca bloquea clics */
+}
+@media (hover: hover) {
+  .btn-slide:hover::before {
+    transform: translateX(0); /* slide desde la izquierda */
+  }
+  .btn-slide:hover {
+    color: #ffffff !important; /* texto blanco cuando el fondo cubre */
+  }
+}
+
 /* Iconos de botones */
 .icon-person, .icon-calendar {
   display: flex !important;
@@ -378,8 +408,8 @@
 }
 
 /* Better focus states for accessibility */
-.btn:focus {
-  outline: 2px solid #f97316;
+.btn:focus-visible {
+  outline: 2px solid #3c4043; /* color del tema, no naranja */
   outline-offset: 2px;
 }
 

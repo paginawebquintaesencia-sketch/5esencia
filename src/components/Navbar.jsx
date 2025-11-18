@@ -80,7 +80,7 @@ function Navbar() {
     <header className="navbar">
       <div className="nav-inner">
         <Link to="/" className="brand" aria-label="Inicio" onClick={() => handleClick('inicio')}>
-          QUINTAESENCIA
+          <img src="/logo.svg" alt="Quintaesencia" className="brand-logo" />
         </Link>
         <button
           className={`menu-toggle ${isMenuOpen ? 'open' : ''}`}

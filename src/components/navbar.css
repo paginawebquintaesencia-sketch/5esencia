@@ -69,6 +69,13 @@
   text-decoration: none;
 }
 
+/* Logo dentro del brand */
+.brand-logo {
+  display: block;
+  height: 48px; /* +50% respecto a 32px */
+  width: auto; /* mantiene relación de aspecto */
+}
+
 .menu-toggle {
   color: #ffffff; /* icono hamburguesa en blanco */
   border: none;
@@ -125,9 +132,6 @@
   border-radius: 6px;
 }
 
-.nav-link.active {
-}
-
 .auth-buttons {
   display: flex;
   align-items: center;
@@ -168,6 +172,7 @@
   nav { order: 2; }
   .menu-toggle { order: 3; margin-left: auto; cursor: pointer; }
   .menu-toggle:focus-visible { outline: 2px solid currentColor; }
+  .brand-logo { height: 40px; width: auto; } /* ~+43% respecto a 28px */
   /* Links del panel móvil en color negro para mejor contraste */
   .nav-links .nav-link { color: #000; }
   .nav-links .nav-link.active { color: #000; }

@@ -45,7 +45,7 @@ export default function HeroApp() {
             <Link to="/signup" className="btn btn-primary" style={{ transition: 'none' }}>
               Unirse a la comunidad
             </Link>
-            <Link to="/calendario" className="btn btn-outline" style={{ transition: 'none' }}>
+            <Link to="/calendario" className="btn btn-outline btn-slide">
               Calendario de actividades
             </Link>
           </div>
