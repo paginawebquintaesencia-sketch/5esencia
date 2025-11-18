@@ -1,8 +1,37 @@
 import './HeroApp.css';
 import { Link } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
 import footerImg from '../img/footer.png';
 
 export default function HeroApp() {
+  const [isMobile, setIsMobile] = useState(() => {
+    if (typeof window !== 'undefined') {
+      return window.matchMedia('(max-width: 768px)').matches;
+    }
+    return false;
+  });
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    const mql = window.matchMedia('(max-width: 768px)');
+    const handler = (e) => setIsMobile(e.matches);
+    // Add listener for both modern and legacy browsers
+    if (mql.addEventListener) {
+      mql.addEventListener('change', handler);
+    } else if (mql.addListener) {
+      mql.addListener(handler);
+    }
+    // Initial check in case of hydration differences
+    setIsMobile(mql.matches);
+    return () => {
+      if (mql.removeEventListener) {
+        mql.removeEventListener('change', handler);
+      } else if (mql.removeListener) {
+        mql.removeListener(handler);
+      }
+    };
+  }, []);
+
   return (
     <main className="hero">
       <div className="hero-content-wrapper">
@@ -21,18 +50,20 @@ export default function HeroApp() {
             </Link>
           </div>
         </section>
-        <aside className="hero-art" aria-hidden>
-          <div className="hero-img-container">
-            <img
-              className="hero-img"
-              src={footerImg}
-              alt="Ciudad playa"
-              width="1200"
-              height="800"
-              loading="eager"
-            />
-          </div>
-        </aside>
+        {!isMobile && (
+          <aside className="hero-art" aria-hidden>
+            <div className="hero-img-container">
+              <img
+                className="hero-img"
+                src={footerImg}
+                alt="Ciudad playa"
+                width="1200"
+                height="800"
+                loading="eager"
+              />
+            </div>
+          </aside>
+        )}
       </div>
     </main>
   );

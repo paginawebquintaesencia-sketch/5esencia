@@ -45,3 +45,183 @@
 .btn-login:hover {
   background-color: darkpurple;
 }
+/* Navbar responsive layout */
+.navbar {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  --navbar-height: 56px;
+}
+
+.nav-inner {
+  max-width: 1320px;
+  margin: 0 auto;
+  padding: 12px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.brand {
+  font-weight: 800;
+  letter-spacing: 0.3px;
+  text-decoration: none;
+}
+
+.menu-toggle {
+  color: #ffffff; /* icono hamburguesa en blanco */
+  border: none;
+  display: none;
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
+  background: transparent;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  outline-offset: 2px;
+}
+
+.menu-icon {
+  width: 22px;
+  height: 2px;
+  background: currentColor;
+  position: relative;
+  display: inline-block;
+  border-radius: 2px;
+  transition: background 0.2s ease;
+}
+
+.menu-icon::before,
+.menu-icon::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  width: 22px;
+  height: 2px;
+  background: currentColor;
+  border-radius: 2px;
+  transition: top 0.2s ease, transform 0.2s ease;
+}
+
+.menu-icon::before { top: -6px; }
+.menu-icon::after { top: 6px; }
+
+/* Animación a "X" cuando el menú está abierto */
+.menu-toggle.open .menu-icon { background: transparent; }
+.menu-toggle.open .menu-icon::before { top: 0; transform: rotate(45deg); }
+.menu-toggle.open .menu-icon::after { top: 0; transform: rotate(-45deg); }
+
+.nav-links {
+  display: flex;
+  gap: 16px;
+}
+
+.nav-link {
+  text-decoration: none;
+  font-weight: 600;
+  padding: 8px 10px;
+  border-radius: 6px;
+}
+
+.nav-link.active {
+}
+
+.auth-buttons {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.btn-register {
+  /* No modificar colores del botón */
+  /* background-color: (inherit) */
+  /* color: (inherit) */
+  /* border: (none or inherit) */
+  padding: 8px 16px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 600;
+}
+/* Mantener hover sin cambios de color para .btn-register */
+
+.nav-avatar {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+}
+
+.user-info-link {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  text-decoration: none;
+}
+
+/* Mobile layout */
+@media (max-width: 1024px) {
+  .menu-toggle { display: inline-flex; }
+  /* Links del panel móvil en color negro para mejor contraste */
+  .nav-links .nav-link { color: #000; }
+  .nav-links .nav-link.active { color: #000; }
+  /* Mejorar legibilidad y área táctil de los enlaces */
+  .nav-links .nav-link {
+    display: block;
+    padding: 12px 14px;
+    border-radius: 10px;
+    line-height: 1.25;
+  }
+  /* Separadores sutiles entre enlaces */
+  .nav-links .nav-link + .nav-link {
+    border-top: 1px solid rgba(0,0,0,0.08);
+    margin-top: 6px;
+    padding-top: 14px;
+  }
+  /* Acciones dentro del panel móvil */
+  .nav-actions { display: flex; flex-direction: column; gap: 12px; margin-top: 8px; }
+  .nav-actions .btn-login,
+  .nav-actions .btn-register { width: 100%; min-height: 44px; border-radius: 12px; }
+  .nav-actions .user-info-link { padding: 10px 12px; border-radius: 10px; }
+  .nav-links {
+    color:black;
+    position: fixed;
+    top: var(--navbar-height, 56px);
+    right: 8px;
+    left: auto;
+    bottom: auto;
+    width: min(80vw, 320px);
+    max-height: calc(100vh - var(--navbar-height) - 16px);
+    display: none;
+    flex-direction: column;
+    gap: 12px;
+    padding: 16px;
+    overflow-y: auto;
+    z-index: 100;
+    border-radius: 12px;
+    background: #ffffff; /* fondo claro para que se vean las pestañas */
+    box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+    border: 1px solid rgba(0,0,0,0.08);
+  }
+  .nav-links.open { display: flex; }
+  .auth-buttons { display: none; }
+  .menu-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.35);
+    z-index: 90;
+  }
+  .menu-toggle {
+    width: 44px;
+    height: 44px;
+  }
+  .nav-link {
+    padding: 14px 18px;
+    font-size: 18px;
+  }
+}
+
+@media (max-width: 480px) {
+  .nav-inner { padding: 10px 16px; }
+  .brand { font-size: 16px; }
+}

@@ -228,6 +228,11 @@
 }
 
 @media (max-width: 768px) {
+  /* Ocultar imagen del hero en móviles */
+  .hero-art {
+    display: none !important;
+  }
+
   .hero { 
     padding: 0 20px; 
     margin-top: 20px;
