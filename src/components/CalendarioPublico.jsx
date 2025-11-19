@@ -37,6 +37,7 @@ function generateCalendarGrid(date) {
 // Paleta de colores para celdas con talleres (asignación determinística)
 const colorPalette = ['#3b3e6c', '#9c51b6', '#e67e54', '#e45a9a', '#2a9d8f', '#e9c46a'];
 const weekdays = ['LUNES', 'MARTES', 'MIÉRCOLES', 'JUEVES', 'VIERNES', 'SÁBADO', 'DOMINGO'];
+const weekdaysShort = ['LU', 'MA', 'MI', 'JU', 'VI', 'SA', 'DO'];
 
 function DefaultDetailView() {
   return (
@@ -82,6 +83,7 @@ function CalendarioPublico() {
   const [selectedTallerId, setSelectedTallerId] = useState(null);
   const [isAnimating, setIsAnimating] = useState(false);
   const [animationKey, setAnimationKey] = useState(0);
+  const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
     const fetchTalleres = async () => {
@@ -98,6 +100,18 @@ function CalendarioPublico() {
       setLoading(false);
     };
     fetchTalleres();
+  }, []);
+
+  useEffect(() => {
+    const mq = window.matchMedia('(max-width: 576px)');
+    const handler = (e) => setIsMobile(e.matches);
+    setIsMobile(mq.matches);
+    if (mq.addEventListener) mq.addEventListener('change', handler);
+    else if (mq.addListener) mq.addListener(handler);
+    return () => {
+      if (mq.removeEventListener) mq.removeEventListener('change', handler);
+      else if (mq.removeListener) mq.removeListener(handler);
+    };
   }, []);
 
   const goToPreviousMonth = () => {
@@ -153,9 +167,9 @@ function CalendarioPublico() {
       <div className="calendario-grid-area">
         
         {}
-        <div className="mes-header">
+        <div className="mes-header" role="region" aria-label="Selector de mes">
           <button className="mes-nav-btn" onClick={goToPreviousMonth} disabled={isAnimating}>&lt;</button>
-          <h1 key={`header-${animationKey}`}>{currentMonthName} {currentYear}</h1>
+          <h1 key={`header-${animationKey}`} aria-live="polite">{currentMonthName} {currentYear}</h1>
           <button className="mes-nav-btn" onClick={goToNextMonth} disabled={isAnimating}>&gt;</button>
         </div>
         
@@ -182,7 +196,7 @@ function CalendarioPublico() {
                 style={taller && !isSelected ? { backgroundColor: taller.color } : {}}
               >
                 {}
-                <span className="weekday-label">{weekdays[index % 7]}</span>
+                <span className="weekday-label">{(isMobile ? weekdaysShort : weekdays)[index % 7]}</span>
 
                 {}
                 {dayNum && <span className="day-number">{dayNum.toString().padStart(2, '0')}</span>}
