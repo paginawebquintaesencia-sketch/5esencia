@@ -75,7 +75,14 @@ export default function Footer() {
       </div>
       
       <div className="footer-image-container">
-        <img src={footerImg} alt="QUINTAESENCIA" className="footer-full-width-img" />
+        <img
+          src={footerImg}
+          alt="QUINTAESENCIA"
+          className="footer-full-width-img"
+          loading="lazy"
+          decoding="async"
+          sizes="100vw"
+        />
       </div>
       
       <div className="footer-copyright-container">
