@@ -72,8 +72,10 @@
 /* Logo dentro del brand */
 .brand-logo {
   display: block;
-  height: 48px; /* +50% respecto a 32px */
-  width: auto; /* mantiene relación de aspecto */
+  height: 48px;
+  width: auto;
+  transform: scale(3);
+  transform-origin: left center;
 }
 
 .menu-toggle {
