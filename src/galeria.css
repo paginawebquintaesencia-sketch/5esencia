@@ -1,190 +1,195 @@
 .galeria-container {
-width: 100%;
-max-width: 1200px;
-margin: 0 auto;
-padding: 40px 20px;
-background-color: #f8f9fa;
-font-family: 'Montserrat', sans-serif;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: clamp(24px, 4vw, 40px) clamp(16px, 3vw, 20px);
+    background: #ffffff;
+  font-family: 'Montserrat', sans-serif;
 }
 
 .galeria-header {
-text-align: center;
-margin-bottom: 50px;
-position: relative;
+  text-align: center;
+  margin-bottom: clamp(24px, 6vw, 50px);
+  position: relative;
 }
 
 .galeria-title {
-font-size: 4.5rem;
-font-weight: 700;
-margin: 0;
-background: linear-gradient(90deg, #E91E63, #bb81f2ff);
-background-clip: text;
--webkit-background-clip: text;
--webkit-text-fill-color: transparent;
+  font-size: clamp(2rem, 6vw, 4rem);
+  font-weight: 700;
+  margin: 0;
+  background: linear-gradient(90deg, #E91E63, #bb81f2ff);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 .galeria-subtitle {
-font-size: 1.1rem;
-color: #555;
-margin: 10px 0 0 0;
+  font-size: clamp(0.95rem, 1.8vw, 1.2rem);
+  color: #555;
+  margin: 10px 0 0 0;
 }
 
 .filter-button {
-font-family:'Montserrat', sans-serif;
-position: absolute;
-top: 10px;
-right: 10px;
-background: none;
-border: 1px solid #ccc;
-border-radius: 6px;
-padding: 6px 12px;
-font-size: 0.9rem;
-font-weight: 500;
-color: #333;
-cursor: pointer;
-display: flex;
-align-items: center;
-gap: 6px;
-transition: background-color 0.3s ease;
+  font-family:'Montserrat', sans-serif;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: none;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 8px 14px;
+  min-height: 44px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #333;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: background-color 0.3s ease;
 }
 
 .filter-button:hover {
-background-color: #f4f4f4;
+  background-color: #f4f4f4;
 }
 
 .category-grid {
-display: grid;
-font-family:'Montserrat', sans-serif;
-grid-template-columns: repeat(4, 1fr);
-gap: 30px;
+  display: grid;
+  font-family:'Montserrat', sans-serif;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: clamp(16px, 3vw, 30px);
 }
 
 .category-card-wrapper {
-position: relative;
-text-align: center;
+  position: relative;
+  text-align: center;
 }
 
 .category-dot {
-width: 30px;
-height: 30px;
-display: inline-block;
-border-radius: 50%;
-margin-bottom: 15px;
-box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  width: 30px;
+  height: 30px;
+  display: inline-block;
+  border-radius: 50%;
+  margin-bottom: 15px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
 .category-card {
-display: block;
-position: relative;
-height: 350px;
-border-radius: 12px;
-overflow: hidden;
-text-decoration: none;
-transition: transform 0.3s ease;
+  display: block;
+  position: relative;
+  aspect-ratio: 4 / 5;
+  min-height: 240px;
+  border-radius: 12px;
+  overflow: hidden;
+  text-decoration: none;
+  transition: transform 0.3s ease;
 }
 
 .category-card:hover {
-transform: translateY(-5px);
+  transform: translateY(-5px);
 }
 
 .card-background {
-position: absolute;
-top: 0;
-left: 0;
-width: 100%;
-height: 100%;
-background-size: cover;
-background-position: center;
-transition: transform 0.4s ease;
-filter: grayscale(100%);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+  transition: transform 0.4s ease, filter 0.3s ease;
+  filter: none;
 }
 
 .category-card:hover .card-background {
-transform: scale(1.05);
+  transform: scale(1.05);
+  filter: grayscale(100%);
 }
 
 .card-overlay {
-position: absolute;
-top: 0;
-left: 0;
-width: 100%;
-height: 100%;
-background-color: rgba(0, 0, 0, 0.7);
-transition: background-color 0.3s ease;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0);
+  transition: background-color 0.3s ease;
 }
 
 .category-card:hover .card-overlay {
-background-color: rgba(0, 0, 0, 0.5);
+  background-color: rgba(0, 0, 0, 0.7);
 }
 
 .card-title {
-position: absolute;
-top: 50%; 
-left: 50%;
-transform: translate(-50%, -50%);
-width: 100%;
-margin: 0;
-font-size: 1.75rem;
-font-weight: 600;
-color: #fff;
-text-align: center;
-padding: 0 20px;
-box-sizing: border-box;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  margin: 0;
+  font-size: clamp(1.2rem, 2.6vw, 1.75rem);
+  font-weight: 600;
+  color: #fff;
+  text-align: center;
+  padding: 0 clamp(12px, 3vw, 20px);
+  box-sizing: border-box;
+  opacity: 0;
+  transition: opacity 0.25s ease, transform 0.25s ease;
+}
+
+.category-card:hover .card-title {
+  opacity: 1;
+  transform: translate(-50%, -50%);
 }
 
 @media (max-width: 992px) {
-.galeria-title {
-font-size: 3rem;
-}
-.category-grid {
-grid-template-columns: repeat(2, 1fr);
-}
+  .category-grid {
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  }
 }
 
 @media (max-width: 576px) {
-.galeria-title {
-font-size: 2.5rem;
-}
-.galeria-header {
-margin-bottom: 30px;
-}
-.category-grid {
-grid-template-columns: 1fr;
-}
-.filter-button {
-position: static;
-margin-top: 20px;
-font-family:'Montserrat', sans-serif;
-display: inline-flex;
-}
+  .galeria-header {
+    margin-bottom: 30px;
+  }
+  .category-grid {
+    grid-template-columns: 1fr;
+  }
+  .filter-button {
+    position: static;
+    margin-top: 20px;
+    display: inline-flex;
+    width: 100%;
+    justify-content: center;
+  }
 }
 
 .filter-dropdown {
-position: absolute;
-font-family:'Montserrat', sans-serif;
-top: 60px;
-right: 10px;
-background-color: white;
-border-radius: 8px;
-box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-border: 1px solid #eee;
-z-index: 10;
-width: 220px;
-padding: 8px 0;
+  position: absolute;
+  font-family:'Montserrat', sans-serif;
+  top: 60px;
+  right: 10px;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  border: 1px solid #eee;
+  z-index: 10;
+  width: min(90vw, 260px);
+  padding: 8px 0;
 }
 
 .filter-dropdown-item {
-display: block;
-font-family:'Montserrat',sans-serif;
-width: 100%;
-padding: 10px 15px;
-background: none;
-border: none;
-color: #333;
-text-decoration: none;
-font-size: 0.95rem;
-text-align: left;
-cursor: pointer;
+  display: block;
+  font-family:'Montserrat',sans-serif;
+  width: 100%;
+  padding: 10px 15px;
+  background: none;
+  border: none;
+  color: #333;
+  text-decoration: none;
+  font-size: 0.95rem;
+  text-align: left;
+  cursor: pointer;
 }
 
 .filter-dropdown-item:hover {

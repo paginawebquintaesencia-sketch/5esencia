@@ -1,5 +1,5 @@
 // src/components/ArtistaDetalle.jsx
-import React from 'react';
+import React, { useRef } from 'react';
 import { useParams } from 'react-router-dom';
 import { listaArtistas } from '../DatosArtistas.js'; // Importa los datos
 import './ArtistaDetalle.css'; // Importa el nuevo CSS
@@ -19,6 +19,13 @@ export default function ArtistaDetalle() {
   // ...
   const { id } = useParams();
   const artista = listaArtistas.find(a => a.id.toString() === id);
+  const viewportRef = useRef(null);
+  const scrollByAmount = (dir) => {
+    const el = viewportRef.current;
+    if (!el) return;
+    const amount = el.clientWidth;
+    el.scrollBy({ left: dir * amount, behavior: 'smooth' });
+  };
   if (!artista) return <h2>Artista no encontrado</h2>;
 
 
@@ -52,15 +59,23 @@ export default function ArtistaDetalle() {
             <p key={index} className="detalle-semblanza">{parrafo}</p>
           ))}
 
-          {/* --- ¡NUEVO! GALERÍA MOVIDA AQUÍ DENTRO --- */}
-          <div className="detalle-galeria-grid">
-            {artista.galeria.map((imgSrc, index) => (
-              <div key={index} className="galeria-imagen-wrapper">
-                <img src={imgSrc} alt={`${artista.nombre} - galería ${index + 1}`} />
+          <div className="detalle-carousel">
+            <button type="button" className="carousel-btn prev" aria-label="Anterior" onClick={() => scrollByAmount(-1)}>
+              ‹
+            </button>
+            <div className="carousel-viewport" ref={viewportRef}>
+              <div className="carousel-track">
+                {artista.galeria.map((imgSrc, index) => (
+                  <div key={index} className="carousel-slide">
+                    <img src={imgSrc} alt={`${artista.nombre} - galería ${index + 1}`} />
+                  </div>
+                ))}
               </div>
-            ))}
+            </div>
+            <button type="button" className="carousel-btn next" aria-label="Siguiente" onClick={() => scrollByAmount(1)}>
+              ›
+            </button>
           </div>
-          {/* --- FIN DE LA GALERÍA --- */}
           
         </div>
       </div>

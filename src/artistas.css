@@ -2,14 +2,12 @@
 
 /* El contenedor principal de la cuadrícula */
 .artistas-grid-container {
-  max-width: 1300px; /* Ancho total GRANDE */
+  max-width: 1300px;
   margin: 40px auto;
-  padding: 20px 0;
+  padding: 16px 0;
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  
-  /* CAMBIO: Aumenta el espacio ENTRE tarjetas */
-  gap: 100px; /* (Por ejemplo, de 40px a 80px) */
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: clamp(24px, 6vw, 100px);
 }
 /* Estilos para CADA tarjeta */
 .artista-card {
@@ -22,12 +20,11 @@
 
 /* El círculo de la imagen */
 .artista-imagen-wrapper {
-  width: 180px; /* Tamaño del círculo */
-  height: 180px;
-  border-radius: 50%; /* Esto crea el círculo */
-  overflow: hidden; /* Esconde las esquinas de la imagen */
-  margin-bottom: 24px; /* Espacio debajo de la imagen */
-  /* CAMBIO: Quitamos el color de fondo de carga para que sea transparente */
+  width: clamp(120px, 18vw, 180px);
+  height: clamp(120px, 18vw, 180px);
+  border-radius: 50%;
+  overflow: hidden;
+  margin-bottom: 24px;
 }
 
 .artista-imagen {
@@ -38,14 +35,12 @@
 
 /* Nombre del artista */
 .artista-nombre {
-  /* CAMBIO: Reducimos un poco el tamaño de 40px a 32px */
-  font-size: 32px; 
+  font-size: clamp(22px, 3.6vw, 32px);
   color: #272C46;
   letter-spacing: 0.2px;
   margin: 0 0 24px 0;
-  line-height: 1.2; /* Damos un poco más de aire */
+  line-height: 1.2;
   font-weight: 700;
-  /* CAMBIO: Centramos el texto para que coincida con el diseño */
   text-align: center;
   white-space: nowrap;
   overflow: hidden;
@@ -56,26 +51,22 @@
 /* Lista de etiquetas */
 .artista-tags {
   display: flex;
-  flex-wrap: wrap; /* Si hay muchas etiquetas, pasan a la línea de abajo */
+  flex-wrap: wrap;
   justify-content: center;
-  list-style: none; /* Quita los puntos de la lista */
+  list-style: none;
   padding: 0;
   margin: 0;
+  gap: 8px 12px;
   margin-bottom: 24px;
 }
 
 .artista-tag {
-  /* Estilos que ya tenías */
-  font-size: 0.8125rem; /* 13px */
+  font-size: clamp(0.75rem, 1.8vw, 0.8125rem);
   font-weight: 500;
   color: #000;
   text-transform: uppercase;
-
   display: flex;
   align-items: center;
-
-  /* AÑADIDO: Espacio entre los items (Punto + Tag) */
-  margin-right: 10px;
 }
 
 /* Quitamos el margen del último elemento para que se alinee bien */
@@ -88,15 +79,10 @@
 */
 .artista-tag::before {
   content: '•';
-  margin-right: 3px; /* Espacio entre el punto y el texto */
-  
-  /* 2. (NUEVO) Hacemos el punto más grande */
-  /* Prueba con 1.4rem. Puedes subirlo a 1.5rem o 1.6rem si lo quieres aún más grande */
-  font-size: 35px; 
-  line-height: 1; /* Ayuda a centrarlo verticalmente */
-
-  /* 3. Color por defecto (si no coincide con nada) */
-  color: #9ca3af; 
+  margin-right: 6px;
+  font-size: clamp(20px, 5vw, 35px);
+  line-height: 1;
+  color: #9ca3af;
 }
 
 /* 4. (NUEVO) Asignamos los colores al punto
@@ -197,9 +183,18 @@
 
 /* --- Responsividad para móviles --- */
 /* (Esto se queda igual) */
+@media (max-width: 992px) {
+  .artistas-grid-container {
+    gap: clamp(20px, 6vw, 60px);
+  }
+}
+
 @media (max-width: 768px) {
   .artistas-grid-container {
-    grid-template-columns: 1fr; /* 1 columna */
-    gap: 50px; /* Más espacio vertical */
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+  .artista-nombre {
+    font-size: clamp(20px, 5.2vw, 28px);
   }
 }

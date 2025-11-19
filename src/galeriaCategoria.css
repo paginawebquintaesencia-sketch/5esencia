@@ -1,4 +1,5 @@
 .galeria-categoria-container {
+    background: #ffffff;
   margin: 40px 0;
   max-width: 1200px;
   width: 100%;
@@ -12,7 +13,7 @@ font-size: 4.5rem;
 font-weight: 700;
 margin: 0 0 10px 0;
 text-align: left;
-background: linear-gradient(90deg, #E91E63, #bb81f2ff);
+background: linear-gradient(90deg, #f72b6f 0%, #b76aff 50%);
 background-clip: text;
 -webkit-background-clip: text;
 -webkit-text-fill-color: transparent;
@@ -28,7 +29,7 @@ color: #555;
 text-decoration: none;
 }
 .volver-link-hub:hover {
-color: #E91E63;
+color: #000000;
 }
 
 .obra-grid {
@@ -38,13 +39,14 @@ gap: 15px;
 }
 
 .obra-card {
-display: flex; 
- flex-direction: column;
-text-decoration: none; 
-color: #333;
-overflow: hidden; 
-box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
-transition: transform 0.3s ease, box-shadow 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  text-decoration: none;
+  color: #333;
+  overflow: hidden;
+  position: relative;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .obra-card:hover {
@@ -53,43 +55,58 @@ box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
 }
 
 .obra-card-img {
- width: 100%;
- height: 250px;
- object-fit: cover;
- display: block;
+  width: 100%;
+  height: 250px;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.3s ease, filter 0.3s ease;
 }
 
 .obra-card-info {
- background-color: #222;
- color: #fff;
- padding: 15px 20px;
- text-align: center;
- min-height: 80px;
- display: flex;
- flex-direction: column;
- justify-content: center;
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.65);
+  color: #fff;
+  padding: 10px 14px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 4px;
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity 0.25s ease, transform 0.25s ease;
+  pointer-events: none;
 }
 
 .obra-card-title {
-font-size: 1rem; 
-font-weight: 600;
- color: #fff;
-padding: 0;
-margin: 0;
- 
- white-space: normal; 
- word-wrap: break-word; 
- max-height: 2.4em; 
- overflow: hidden; 
-s text-overflow: ellipsis; 
- line-height: 1.2em; 
+  font-size: 1rem;
+  font-weight: 600;
+  color: #fff;
+  padding: 0;
+  margin: 0;
+  white-space: normal;
+  word-wrap: break-word;
+  line-height: 1.2em;
 }
 
 .obra-card-autor {
- font-size: 0.85rem; 
- font-weight: 400;
- color: #ddd; 
- margin: 0 0 5px 0; 
+  font-size: 0.85rem;
+  font-weight: 400;
+  color: #ddd;
+  margin: 0;
+}
+
+.obra-card:hover .obra-card-img {
+  transform: scale(1.02);
+  filter: grayscale(100%);
+}
+
+.obra-card:hover .obra-card-info {
+  opacity: 1;
+  transform: translateY(0);
 }
 
 @media (max-width: 992px) {
