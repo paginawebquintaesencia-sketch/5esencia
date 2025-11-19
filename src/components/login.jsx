@@ -3,7 +3,7 @@ import './login.css';
 import { mapAuthError } from './authErrors';
 // Supabase eliminado: autenticación deshabilitada
 
-const Login = ({ onSwitchToSignup, onLoginSuccess }) => {
+const Login = ({ onSwitchToSignup }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
@@ -48,7 +48,7 @@ const Login = ({ onSwitchToSignup, onLoginSuccess }) => {
     <div className="login-container">
       
       <div className="login-logo">
-        5<span>.</span>
+        <img src="/5cia.png" alt="Quintaesencia" className="login-logo-img" />
       </div>
 
       <h2>Iniciar sesión</h2>
@@ -58,18 +58,18 @@ const Login = ({ onSwitchToSignup, onLoginSuccess }) => {
       </p>
 
       {error && (
-        <div className="error" role="alert" style={{color:'#b00020', fontWeight:600, marginBottom: '12px'}}>
+        <div className="error-message" role="alert">
           {error}
         </div>
       )}
       {notConfirmed && (
-        <div className="warning" role="status" style={{color:'#ff9800', fontWeight:600, marginBottom: '12px'}}>
+        <div className="warning-message" role="status">
           Tu cuenta aún no está confirmada. Revisa tu correo y confirma.
-          <div style={{ marginTop: 8, display: 'flex', gap: 8, alignItems: 'center' }}>
+          <div className="resend-row">
             <button type="button" onClick={handleResend} disabled={loading} className="login-button">
               {loading ? 'Enviando...' : 'Reenviar correo'}
             </button>
-            {resent && <span style={{ color: '#0a7', fontWeight: 600 }}>Correo reenviado.</span>}
+            {resent && <span className="resend-ok">Correo reenviado.</span>}
           </div>
         </div>
       )}
@@ -84,6 +84,7 @@ const Login = ({ onSwitchToSignup, onLoginSuccess }) => {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
+            autoComplete="email"
           />
         </div>
 
@@ -96,10 +97,11 @@ const Login = ({ onSwitchToSignup, onLoginSuccess }) => {
             onChange={(e) => setPassword(e.target.value)}
             required
             minLength={6}
+            autoComplete="current-password"
           />
         </div>
 
-        <button type="submit" className="login-button" disabled={loading}>
+        <button type="submit" className="login-button" disabled={loading} aria-busy={loading}>
           {loading ? 'Entrando...' : 'Iniciar sesión'}
         </button>
         

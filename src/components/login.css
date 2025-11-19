@@ -7,18 +7,18 @@
     box-sizing: border-box;
     text-align: center;
     background-color: #fff;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.08);
 }
 
 .login-logo {
-    font-size: 6rem;
-    font-weight: 700;
-    color: #4A47A3;
-    line-height: 1;
     margin-bottom: 20px;
 }
 
-.login-logo span {
-    color: #E91E63;
+.login-logo-img {
+    display: inline-block;
+    width: clamp(140px, 40vw, 240px);
+    height: auto;
 }
 
 .login-container h2 {
@@ -88,22 +88,47 @@
     cursor: pointer;
     transition: background-color 0.3s ease;
     margin-top: 10px;
+    width: 100%;
 }
 
 .login-button:hover {
     background-color: #c2185b;
 }
 
+.error-message {
+  color: #b00020;
+  font-weight: 600;
+  margin-bottom: 12px;
+}
+
+.warning-message {
+  color: #ff9800;
+  font-weight: 600;
+  margin-bottom: 12px;
+}
+
+.resend-row {
+  margin-top: 8px;
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.resend-ok {
+  color: #0a7;
+  font-weight: 600;
+}
+
 @media (max-width: 480px) {
   
   .login-container {
-    padding: 15px;
+    padding: 20px 16px;
   }
 
   .login-logo {
-    font-size: 5rem; 
     margin-bottom: 15px;
   }
+  .login-logo-img { width: clamp(120px, 48vw, 200px); }
 
   .login-container h2 {
     font-size: 2rem;
